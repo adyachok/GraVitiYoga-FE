@@ -1,0 +1,9 @@
+<div >
+  <app-training-table-entry *ngFor="let training of trainings"
+    [name]="training.name" [price]="training.price" [image]="training.image" (notify)="onNotify($event)">
+  </app-training-table-entry>
+  <div class="row total">
+    <div class="col-sm-10">Всего, сумма:</div>
+    <div class="col-sm-2">{{ total }}</div>
+  </div>
+</div>
