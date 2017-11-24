@@ -10,6 +10,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {InfoModalComponent} from './trainings/modal/info.component';
 import {DiscountModalComponent} from './trainings/modal/discount.component';
 import {TrainingTableEntryManagerComponent} from './trainings/training.table-entry-manager.component';
+import {DeleteModalComponent} from './trainings/modal/delete.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {TrainingTableEntryManagerComponent} from './trainings/training.table-ent
     TrainingTableEntryComponent,
     InfoModalComponent,
     DiscountModalComponent,
-    TrainingTableEntryManagerComponent
+    TrainingTableEntryManagerComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,

@@ -91,4 +91,8 @@ export class DiscountModalComponent {
   public selectionDone(): void {
     console.log('Done');
   }
+
+  openDeleteModal(content): void {
+    console.log('delete');
+  }
 }

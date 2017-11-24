@@ -1,0 +1,17 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ name }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Вы желаєть отказаться от ...</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-default" (click)="c('Close click')">Закрыть</button>
+    <button type="button" class="btn btn-outline-dark btn-danger">Отказаться</button>
+  </div>
+</ng-template>
+
+<i class="fa fa-times fa-fw" aria-hidden="true" (click)="open(content)"></i>
