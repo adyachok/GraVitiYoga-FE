@@ -87,12 +87,4 @@ export class DiscountModalComponent {
     }
     this.selectedDiscount = dicountSelected;
   }
-
-  public selectionDone(): void {
-    console.log('Done');
-  }
-
-  openDeleteModal(content): void {
-    console.log('delete');
-  }
 }
