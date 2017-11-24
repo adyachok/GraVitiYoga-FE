@@ -1,0 +1,5 @@
+<app-info [name]="training.name" [shortDescription]="training.shortDescription"></app-info>
+<app-discount [discountPolicy]="training.discountPolicy" [trainingBasePrice]="training.price" [selected]="selected"></app-discount><!--(click)="onTrainingSelect()"//-->
+  <!--<i class="fa fa-check fa-fw" aria-hidden="true"-->
+     <!--[ngStyle]="{'color': isSelected ? '#827717' : '#F0F4C3'}"></i>-->
+<app-del [name]="training.name" *ngIf="training.isSelected"></app-del>
