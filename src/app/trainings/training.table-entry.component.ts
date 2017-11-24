@@ -4,25 +4,26 @@ import {Training} from './training';
 
 @Component({
   selector: 'app-training-table-entry',
-  templateUrl: 'training.table-entry.html',
-  styleUrls: ['training.table-entry.css'],
+  templateUrl: 'training.table-entry.component.html',
+  styleUrls: ['training.table-entry.component.css'],
 })
 export class TrainingTableEntryComponent {
-  @Input() name: string;
-  @Input() price: number;
-  @Input() image: string;
-  isSelected = false;
+  @Input() training: Training;
   @Output() notify = new EventEmitter<Training>();
+  userSelectedPrice = 0;
 
-  onTrainingSelect() {
-    const training = {name: this.name, price: this.price, isSelected: false, image: '' };
-    if (!this.isSelected) {
-      this.isSelected = true;
-      training.isSelected = true;
-      this.notify.emit(training);
-    } else {
-      this.isSelected = false;
-      this.notify.emit(training);
-    }
+  // onTrainingSelect() {
+  //   if (!this.isSelected) {
+  //     this.isSelected = true;
+  //     this.training.isSelected = true;
+  //     this.notify.emit(this.training);
+  //   } else {
+  //     this.isSelected = false;
+  //     this.training.isSelected = false;
+  //     this.notify.emit(this.training);
+  //   }
+  // }
+  onNotify(userSelectedPrice: number) {
+    this.training.isSelected = true;
   }
 }

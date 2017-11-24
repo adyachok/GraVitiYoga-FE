@@ -1,0 +1,36 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Логистика занятий</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" >
+    <p>сколько раз в неделю вы хотите заниматься?</p>
+    <div class="row">
+      <div class="col-sm-7">
+        <div class="form-check" *ngFor="let discount of discountPolicy.discounts; let i = index">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios{{i}}" value="{{ discount.rate }}" [checked]="selectedDiscount==discount.rate" (change)="countDiscount($event)">
+            {{ discount.days }} дней (скидка {{ discount.rate }}%)
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-4 discount">
+        <div class="row">
+          <div class="col-sm-12 discount-sum">{{ discount }}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 discount-text">скидка</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-default" (click)="c('Close click')">Закрыть</button>
+    <button type="button" class="btn btn-outline-dark btn-info" (click)="c('selectionDone')">Выбрать</button>
+  </div>
+</ng-template>
+
+<i class="fa fa-check fa-fw" aria-hidden="true" (click)="open(content)" *ngIf="!selected"></i>
+<i class="fa fa-pencil fa-fw" aria-hidden="true" (click)="open(content)" *ngIf="selected"></i>
