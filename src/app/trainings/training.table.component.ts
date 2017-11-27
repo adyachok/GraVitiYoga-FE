@@ -28,13 +28,13 @@ export class TrainingTableComponent implements OnInit {
   }
 
   findSelectedTraining(training: SelectedTraining): number {
-    // Returns index of selected training or  undefined
+    // Returns index of selected training or -1
     return this.selectedTrainings.findIndex(selected => selected.trainingName === training.trainingName);
   }
 
   removeSelectedTraining(training: SelectedTraining): void {
-    const idx = this.findSelectedTraining(training)
-    if (idx) {
+    const idx = this.findSelectedTraining(training);
+    if (idx >= 0) {
       this.selectedTrainings.splice(idx, 1);
     }
   }
@@ -45,8 +45,10 @@ export class TrainingTableComponent implements OnInit {
   }
 
   countTotal() {
-    const counted_total = 0;
-    this.selectedTrainings.forEach(training => counted_total + training.selectedPrice);
+    let counted_total = 0;
+    this.selectedTrainings.forEach(training => {
+      counted_total += training.selectedPrice;
+    });
     this.total = counted_total;
   }
 
