@@ -9,4 +9,5 @@ import {Training} from './training';
 
 export class TrainingTableEntryManagerComponent {
   @Input() training: Training;
+  @Input() canDelete: boolean;
 }

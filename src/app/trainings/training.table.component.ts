@@ -1,6 +1,7 @@
 import {Training} from './training';
 import {Component, OnInit} from '@angular/core';
 import {TrainingService} from './training.service';
+import {SelectedTraining} from './selectedTraining';
 
 
 @Component({
@@ -10,20 +11,47 @@ import {TrainingService} from './training.service';
 })
 export class TrainingTableComponent implements OnInit {
   trainings: Training[];
+  selectedTrainings: SelectedTraining[];
   total: number;
   errorMessage: string;
 
   constructor(private _trainingService: TrainingService) {
     this.total = 0;
   }
-  onNotify(training: Training) {
-    if (training.isSelected) {
-      this.total += training.price;
+  onNotify(training: SelectedTraining) {
+    if (training.selected) {
+      this.addSelectedTraining(training);
     } else {
-      this.total -= training.price;
+      this.removeSelectedTraining(training);
+    }
+    this.countTotal();
+  }
+
+  findSelectedTraining(training: SelectedTraining): number {
+    // Returns index of selected training or  undefined
+    return this.selectedTrainings.findIndex(selected => selected.trainingName === training.trainingName);
+  }
+
+  removeSelectedTraining(training: SelectedTraining): void {
+    const idx = this.findSelectedTraining(training)
+    if (idx) {
+      this.selectedTrainings.splice(idx, 1);
     }
   }
+
+  addSelectedTraining(training: SelectedTraining): void {
+    this.removeSelectedTraining(training);
+    this.selectedTrainings.push(training);
+  }
+
+  countTotal() {
+    const counted_total = 0;
+    this.selectedTrainings.forEach(training => counted_total + training.selectedPrice);
+    this.total = counted_total;
+  }
+
   ngOnInit(): void {
+    this.selectedTrainings = [];
     this._trainingService.getTrainingsMock()
       .subscribe(trainings => this.trainings = trainings,
         error => this.errorMessage = <any>error);

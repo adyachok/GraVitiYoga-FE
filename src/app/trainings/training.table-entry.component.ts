@@ -1,29 +1,37 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Training} from './training';
+import {TrainingSelectService} from './trainingSelect.service';
+import {SelectedTraining} from './selectedTraining';
+import {TrainingUnselectService} from './trainingUnselectService';
 
 
 @Component({
   selector: 'app-training-table-entry',
   templateUrl: 'training.table-entry.component.html',
   styleUrls: ['training.table-entry.component.css'],
+  providers: [TrainingSelectService, TrainingUnselectService]
 })
 export class TrainingTableEntryComponent {
   @Input() training: Training;
-  @Output() notify = new EventEmitter<Training>();
-  userSelectedPrice = 0;
+  @Output() notify = new EventEmitter<SelectedTraining>();
+  canDelete = false;
 
-  // onTrainingSelect() {
-  //   if (!this.isSelected) {
-  //     this.isSelected = true;
-  //     this.training.isSelected = true;
-  //     this.notify.emit(this.training);
-  //   } else {
-  //     this.isSelected = false;
-  //     this.training.isSelected = false;
-  //     this.notify.emit(this.training);
-  //   }
-  // }
-  onNotify(userSelectedPrice: number) {
-    this.training.isSelected = true;
+  constructor(private trainingSelectService: TrainingSelectService,
+              private trainingUnselectService: TrainingUnselectService) {
+    trainingSelectService.selectedTraining$.subscribe(
+      selectedPrice => {
+        this.notify.emit({'trainingName': this.training.name,
+          'selectedPrice': selectedPrice, 'selected': true });
+        this.canDelete = true;
+      });
+    trainingUnselectService.unselectedTraining$.subscribe( unselected => {
+      this.notify.emit(
+        {
+          'trainingName': this.training.name,
+          'selectedPrice': 0,
+          'selected': false
+        });
+      this.canDelete = false;
+    });
   }
 }

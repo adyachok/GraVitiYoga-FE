@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {TrainingUnselectService} from '../trainingUnselectService';
 
 @Component({
   selector: 'app-del',
@@ -9,11 +10,13 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class DeleteModalComponent {
   @Input() name: string;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private trainingUnselectService: TrainingUnselectService) {}
 
   open(content) {
     this.modalService.open(content).result.then((result) => {
-      console.log('Closed with: ${result}');
+      if (result === 'Unselection done') {
+        this.trainingUnselectService.announceTrainingunSelection(true);
+      }
     }, (reason) => {
       console.log('Dismissed ${this.getDismissReason(reason)}');
     });

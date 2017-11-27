@@ -1,18 +1,18 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {DiscountPolicy} from './discountPolicy';
+import {TrainingSelectService} from '../trainingSelect.service';
 
 @Component({
   selector: 'app-discount',
   templateUrl: 'discount.component.html',
   styleUrls: ['discount.component.css']
 })
-export class DiscountModalComponent {
+export class DiscountModalComponent implements OnInit {
   @Input() discountPolicy: DiscountPolicy;
   @Input() trainingBasePrice: number;
   @Input() selected: boolean;
-  @Output() notify = new EventEmitter<number>();
   discount: number;
   private _discount: number;
   customerPrice: number;
@@ -20,9 +20,7 @@ export class DiscountModalComponent {
   selectedDiscount = 0;
   private _selectedDiscount: number;
 
-  constructor(private modalService: NgbModal) {
-    this.initDefault();
-  }
+  constructor(private modalService: NgbModal, private trainingSelectService: TrainingSelectService) {}
 
   open(content) {
     this.modalService.open(content).result.then((result) => {
@@ -42,7 +40,7 @@ export class DiscountModalComponent {
       this.selected = true;
     }
     // Send selected discounted price
-    this.notify.emit(this.customerPrice);
+    this.trainingSelectService.announceTrainingSelection(this.customerPrice);
   }
 
   private processSelected() {
@@ -86,5 +84,9 @@ export class DiscountModalComponent {
       this.customerPrice = this.trainingBasePrice;
     }
     this.selectedDiscount = dicountSelected;
+  }
+
+  public ngOnInit(): void {
+    this.initDefault();
   }
 }
