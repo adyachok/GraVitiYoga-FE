@@ -6,3 +6,16 @@
   font-weight: bold;
   color: #F9FBE7;
 }
+
+.selected {
+  margin-top: 1rem;
+  background-color: #827717;
+}
+
+.total-back {
+  color: #F9FBE7;
+}
+
+h5 {
+  margin: 1rem;
+}
