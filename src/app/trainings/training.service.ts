@@ -35,7 +35,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -49,7 +49,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -63,7 +63,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -77,7 +77,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -91,7 +91,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -105,7 +105,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -119,7 +119,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -133,7 +133,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -147,7 +147,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -161,7 +161,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         },
         {
@@ -175,7 +175,7 @@ export class TrainingService {
           'discountPolicy': {
             'name': '',
             'description': '',
-            'discounts': [{ 'days': 30, 'rate': 0}, { 'days': 45, 'rate': 15}, { 'days': 60, 'rate': 30}]
+            'discounts': [{ 'month': 3, 'rate': 0}, { 'month': 6, 'rate': 10}, { 'month': 12, 'rate': 20}]
           }
         }
       ]

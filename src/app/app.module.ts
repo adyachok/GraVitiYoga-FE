@@ -11,6 +11,11 @@ import {InfoModalComponent} from './trainings/modal/info.component';
 import {DiscountModalComponent} from './trainings/modal/discount.component';
 import {TrainingTableEntryManagerComponent} from './trainings/training.table-entry-manager.component';
 import {DeleteModalComponent} from './trainings/modal/delete.component';
+import {MonthPluralPipe} from './tools/pipes/month.plural.pipe';
+import {TimetableComponent} from './timetable/timetable.component';
+import {SetEventModalComponent} from './timetable/modal/set.event.component';
+import {TimepickerComponent} from './tools/timepicker.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -21,14 +26,19 @@ import {DeleteModalComponent} from './trainings/modal/delete.component';
     InfoModalComponent,
     DiscountModalComponent,
     TrainingTableEntryManagerComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    MonthPluralPipe,
+    TimetableComponent,
+    SetEventModalComponent,
+    TimepickerComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    FormsModule
   ],
   providers: [TrainingService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

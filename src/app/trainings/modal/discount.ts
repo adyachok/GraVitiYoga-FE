@@ -1,4 +1,4 @@
 export class Discount {
-  days: number;
+  month: number;
   rate: number;
 }

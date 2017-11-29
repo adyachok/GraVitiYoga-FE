@@ -1,0 +1,17 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Выбор времени занятия</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Время начала занятия <app-timepicker [eventStartTime]="event.startTime"></app-timepicker></p>
+    <p>Время окончания занятия {{ event.finishTime }}</p>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-default" (click)="c('Close click')">Закрыть</button>
+    <button type="button" class="btn btn-outline-dark btn-success" (click)="c('Set event done')">Выбрать</button>
+  </div>
+</ng-template>
