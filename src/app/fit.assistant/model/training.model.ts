@@ -1,9 +1,8 @@
-import {DiscountPolicy} from './modal/discountPolicy';
+import {DiscountPolicy} from './discount.policy.model';
 
 export class Training {
   name: string;
   price: number;
-  isSelected: boolean;
   image: string;
   shortDescription: string;
   discountPolicy: DiscountPolicy;

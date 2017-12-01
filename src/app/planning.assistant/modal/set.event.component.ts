@@ -1,8 +1,8 @@
 import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {SetEventService} from '../services/set.event.service';
 import {TrainingEvent} from '../model/training.event.model';
+import {SetEventService} from '../services/set.event.service';
 
 
 @Component({

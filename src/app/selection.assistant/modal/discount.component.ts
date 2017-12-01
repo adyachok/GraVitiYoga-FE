@@ -1,8 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {DiscountPolicy} from './discountPolicy';
-import {TrainingSelectService} from '../trainingSelect.service';
+import {DiscountPolicy} from '../../fit.assistant/model/discount.policy.model';
+import {TrainingSelectService} from '../service/training.select.service';
+
+
 
 @Component({
   selector: 'app-discount',

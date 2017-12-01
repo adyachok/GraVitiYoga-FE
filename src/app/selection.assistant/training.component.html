@@ -6,10 +6,9 @@
     </div>
   </div>
   <div class="training-select col-sm-1" >
-    <app-training-entry-manager [training]="training" [canDelete]="canDelete"></app-training-entry-manager>
+    <app-info [name]="training.name" [shortDescription]="training.shortDescription"></app-info>
+    <app-discount [discountPolicy]="training.discountPolicy" [trainingBasePrice]="training.price" [selected]="canDelete"></app-discount>
+    <app-del [name]="training.name" *ngIf="canDelete"></app-del>
   </div>
   <div class="training-price col-sm-1">{{ training.price }}</div>
-
-  <!--<div class="training-price col-sm-1" *ngIf="training.selected">aaa</div>-->
-  <!--<div class="training-price col-sm-1" *ngIf="training.selected">bbb</div>-->
 </div>

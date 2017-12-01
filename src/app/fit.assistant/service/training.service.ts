@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import {Training} from './training';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
+import {Training} from '../model/training.model';
 
 @Injectable()
 export class TrainingService {
@@ -14,7 +14,7 @@ export class TrainingService {
 
   public getTrainings(): Observable<Training[]> {
     return this._http.get<Training[]>(this._trainingsUrl)
-      // .do(data => console.log('All: ' + JSON.stringify(data)))
+    // .do(data => console.log('All: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
 
@@ -27,7 +27,6 @@ export class TrainingService {
         {
           'name': 'Tренировка GraVitiYoga в группе',
           'price': 223,
-          'isSelected': false,
           'image': '../../assets/img/retreat.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
@@ -41,7 +40,6 @@ export class TrainingService {
         {
           'name': 'Урок GraVitiYoga с персональным инструктором',
           'price': 345,
-          'isSelected': false,
           'image': '../../assets/img/yoga_pair.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
@@ -55,7 +53,6 @@ export class TrainingService {
         {
           'name': 'Урок классической йоги (дыхание, равновесие, растяжки)',
           'price': 223,
-          'isSelected': false,
           'image': '../../assets/img/yoga_sea.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
@@ -69,7 +66,6 @@ export class TrainingService {
         {
           'name': 'Массаж шведи, спортивный или классический',
           'price': 273,
-          'isSelected': false,
           'image': '../../assets/img/massage.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
@@ -83,7 +79,6 @@ export class TrainingService {
         {
           'name': 'Массаж интуитивный',
           'price': 267,
-          'isSelected': false,
           'image': '../../assets/img/lotus.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor' +
           ' incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco' +
@@ -97,7 +92,6 @@ export class TrainingService {
         {
           'name': 'Программа индивидуального моделирования тела',
           'price': 543,
-          'isSelected': false,
           'image': '../../assets/img/ideal_body_composition_1.jpg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
@@ -111,7 +105,6 @@ export class TrainingService {
         {
           'name': 'Реабилитация или коррекция тела (суставы, позвоночник, связки)',
           'price': 1003,
-          'isSelected': false,
           'image': '../../assets/img/yoga_pair.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
@@ -125,7 +118,6 @@ export class TrainingService {
         {
           'name': 'Занятия на тренажерах “ПравИло” и “Лебедь”',
           'price': 777,
-          'isSelected': false,
           'image': '../../assets/img/flying-yoga.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
@@ -139,7 +131,6 @@ export class TrainingService {
         {
           'name': 'Курс тета-хиллинг',
           'price': 678,
-          'isSelected': false,
           'image': '../../assets/img/rehabilitation.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
@@ -153,7 +144,6 @@ export class TrainingService {
         {
           'name': 'Лайф-коучинг сопровождение',
           'price': 480,
-          'isSelected': false,
           'image': '../../assets/img/coaching.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
@@ -167,7 +157,6 @@ export class TrainingService {
         {
           'name': 'Консультации по питанию и здоровому образу жизни',
           'price': 113,
-          'isSelected': false,
           'image': '../../assets/img/meal.jpeg',
           'shortDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
           'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +

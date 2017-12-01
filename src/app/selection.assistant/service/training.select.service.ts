@@ -7,7 +7,7 @@ export class TrainingSelectService {
 
   selectedTraining$ = this.selectedTrainingSource.asObservable();
 
-  announceTrainingSelection(selectedPrice: number) {
-    this.selectedTrainingSource.next(selectedPrice);
+  announceTrainingSelection(selectedDuration: number) {
+    this.selectedTrainingSource.next(selectedDuration);
   }
 }

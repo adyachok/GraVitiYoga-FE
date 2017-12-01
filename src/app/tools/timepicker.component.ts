@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
-import {TrainingEvent} from '../timetable/model/training.event.model';
+
 
 @Component({
   selector: 'app-timepicker',
@@ -11,7 +11,7 @@ export class TimepickerComponent implements OnInit {
   time: NgbTimeStruct;
   hourStep = 1;
   minuteStep = 30;
-  // @Output() notifyTimeSelected = new EventEmitter<TrainingEvent>();
+  @Output() notifyTimeSelected = new EventEmitter<NgbTimeStruct>();
 
   convertStringTimeToNumbers(time: string) {
     const timeArrayStrings = time.split(':');
@@ -23,7 +23,7 @@ export class TimepickerComponent implements OnInit {
   }
 
   processTimeSelected(event: any) {
-    console.log(event);
+    console.log(this.time);
   }
 
   ngOnInit(): void {

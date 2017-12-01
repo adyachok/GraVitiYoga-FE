@@ -1,0 +1,47 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+.step {
+  position: relative;
+  min-height: 32px
+  /* circle-size */
+;
+}
+.step > div:first-child {
+  position: static;
+  height: 0;
+}
+.step > div:last-child {
+  margin-left: 32px;
+  padding-left: 16px;
+}
+.circle {
+  background: #AEEA00;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 16px;
+  position: relative;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+.circle:hover {
+  background-color: #99c808;
+}
+.line {
+  position: absolute;
+  border-left: 1px solid rgba(89, 164, 6, 0.9);
+  left: 16px;
+  bottom: 10px;
+  top: 42px;
+}
+.step:last-child .line {
+  display: none;
+}
+.title {
+  line-height: 32px;
+  font-weight: bold;
+}

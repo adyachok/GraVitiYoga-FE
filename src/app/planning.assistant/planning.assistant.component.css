@@ -19,3 +19,6 @@
   text-align: center;
   padding: 5px;
 }
+.selected {
+  background-color: greenyellow;
+}

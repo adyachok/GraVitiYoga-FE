@@ -1,0 +1,32 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Выбор времени занятия</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="select">
+      Время занятия <strong>{{ event.startTime }}</strong> - <strong>{{ event.finishTime }}</strong>
+    </div>
+    <div class="edit" *ngIf="false">
+      <!--Время начала занятия <app-timepicker [eventStartTime]="event.startTime"></app-timepicker>-->
+      Время окончания занятия {{ event.finishTime }}
+    </div>
+    <br>
+    <label for="training-name">Виберите тренинг:</label>
+    <select class="form-control select-training-name" id="training-name">
+      <option>Tренировка GraVitiYoga в группе</option>
+      <option>Урок GraVitiYoga с персональным инструктором</option>
+      <option>Урок классической йоги (дыхание, равновесие, растяжки)</option>
+      <option>Массаж шведи, спортивный или классический</option>
+      <option>Массаж интуитивный</option>
+      <option>Программа индивидуального моделирования тела</option>
+      <option>Занятия на тренажерах “ПравИло” и “Лебедь”</option>
+    </select>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-default" (click)="c('Close click')">Закрыть</button>
+    <button type="button" class="btn btn-outline-dark btn-success" (click)="c('Set event done')">Выбрать</button>
+  </div>
+</ng-template>

@@ -1,17 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SetEventService} from './services/set.event.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {SetEventService} from './services/set.event.service';
+
 
 @Component({
-  selector: 'app-timetable',
-  styleUrls: ['timetable.component.css'],
-  templateUrl: 'timetable.component.html',
+  selector: 'app-planning-assistant',
+  templateUrl: 'planning.assistant.component.html',
+  styleUrls: ['planning.assistant.component.css'],
   providers: [SetEventService]
 })
-export class TimetableComponent implements OnInit {
-  @Input() start: number;
-  @Input() stop: number;
-  @Input() step: number;
+export class PlanningAssistantComponent implements OnInit {
+  @Input() start = 8;
+  @Input() stop = 21;
+  @Input() step = 0.5;
   timeSlots: string[][];
   days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница'];
 
@@ -56,10 +57,10 @@ export class TimetableComponent implements OnInit {
     return timeSlots;
   }
 
-  timeslotClick(event: any) {
+  timeSlotClick(event: any) {
     const target = event.target;
     const eventStartTime = target.attributes['data-startTime'].value;
-    const eventFinishTime = target.attributes['data-finishTime'].value;
+    const eventFinishTime = this.setEventFinishTime(eventStartTime);
     const eventDay = target.attributes['data-day'].value;
 
     this.setEventSetvice.announceEventSetting({
@@ -68,8 +69,18 @@ export class TimetableComponent implements OnInit {
       'weekDay': eventDay});
   }
 
+  private setEventFinishTime(eventStartTime: string): string {
+    const eventTimeArray = eventStartTime.split(':');
+    let eventFinishTime =  Number(eventTimeArray[0]) + 1;
+    if (eventFinishTime >= 24) {
+      eventFinishTime = eventFinishTime - 24;
+    }
+    return eventFinishTime + ':' + eventTimeArray[1];
+  }
+
   ngOnInit() {
     const timeSlotsNum = this.generator(this.start, this.stop, this.step);
     this.timeSlots = this.convertToTimeSlot(timeSlotsNum);
   }
 }
+

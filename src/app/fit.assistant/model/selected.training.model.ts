@@ -1,5 +1,6 @@
 export class SelectedTraining {
   trainingName: string;
-  selectedPrice: number;
+  // Duration in month
+  duration: number;
   selected: boolean;
 }

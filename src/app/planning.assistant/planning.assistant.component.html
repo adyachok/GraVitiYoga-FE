@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-2 timetable-day" *ngFor="let day of days">
       <div class="day">{{ day }}</div>
-      <div class="timeslot" *ngFor="let timeSlot of timeSlots" [attr.data-day]="day" [attr.data-startTime]="timeSlot[0]" [attr.data-finishTime]="timeSlot[1]" (click)="timeslotClick($event)">
+      <div class="timeslot" *ngFor="let timeSlot of timeSlots" [attr.data-day]="day" [attr.data-startTime]="timeSlot[0]" [attr.data-finishTime]="timeSlot[1]" (click)="timeSlotClick($event)">
         {{ timeSlot[0] }} - {{ timeSlot[1] }}
       </div>
     </div>

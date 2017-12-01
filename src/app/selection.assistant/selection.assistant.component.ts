@@ -1,30 +1,28 @@
-import {Training} from './training';
 import {Component, OnInit} from '@angular/core';
-import {TrainingService} from './training.service';
-import {SelectedTraining} from './selectedTraining';
+import {TrainingService} from '../fit.assistant/service/training.service';
+import {Training} from '../fit.assistant/model/training.model';
+import {SelectedTraining} from '../fit.assistant/model/selected.training.model';
 
 
 @Component({
-  selector: 'app-training-table',
-  templateUrl: 'training.table.component.html',
-  styleUrls: ['training.table.component.css']
+  selector: 'app-selection-assistant',
+  templateUrl: 'selection.assistant.component.html',
+  styleUrls: ['selection.assistant.component.css']
 })
-export class TrainingTableComponent implements OnInit {
+export class SelectionAssistantComponent implements OnInit {
   trainings: Training[];
-  selectedTrainings: SelectedTraining[];
-  total: number;
   errorMessage: string;
+  selectedTrainings: SelectedTraining[];
 
-  constructor(private _trainingService: TrainingService) {
-    this.total = 0;
-  }
+  constructor(private trainingService: TrainingService) {}
+
   onNotify(training: SelectedTraining) {
     if (training.selected) {
       this.addSelectedTraining(training);
     } else {
       this.removeSelectedTraining(training);
     }
-    this.countTotal();
+    // Update selection on fit assistant or wait to next step
   }
 
   findSelectedTraining(training: SelectedTraining): number {
@@ -44,17 +42,9 @@ export class TrainingTableComponent implements OnInit {
     this.selectedTrainings.push(training);
   }
 
-  countTotal() {
-    let counted_total = 0;
-    this.selectedTrainings.forEach(training => {
-      counted_total += training.selectedPrice;
-    });
-    this.total = counted_total;
-  }
-
   ngOnInit(): void {
     this.selectedTrainings = [];
-    this._trainingService.getTrainingsMock()
+    this.trainingService.getTrainingsMock()
       .subscribe(trainings => this.trainings = trainings,
         error => this.errorMessage = <any>error);
   }

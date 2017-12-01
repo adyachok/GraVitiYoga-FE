@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {TrainingUnselectService} from '../trainingUnselectService';
+import {TrainingUnselectService} from '../service/training.unselect.service';
+
 
 @Component({
   selector: 'app-del',

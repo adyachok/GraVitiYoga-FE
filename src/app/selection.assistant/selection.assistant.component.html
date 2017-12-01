@@ -1,0 +1,6 @@
+<div>
+  <app-training-entry *ngFor="let training of trainings"
+                            [training]="training" (notify)="onNotify($event)">
+  </app-training-entry>
+</div>
+

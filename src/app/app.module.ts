@@ -3,40 +3,45 @@ import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import {TrainingTableEntryComponent} from './trainings/training.table-entry.component';
-import {TrainingTableComponent} from './trainings/training.table.component';
-import {TrainingService} from './trainings/training.service';
 import {HttpClientModule} from '@angular/common/http';
-import {InfoModalComponent} from './trainings/modal/info.component';
-import {DiscountModalComponent} from './trainings/modal/discount.component';
-import {TrainingTableEntryManagerComponent} from './trainings/training.table-entry-manager.component';
-import {DeleteModalComponent} from './trainings/modal/delete.component';
 import {MonthPluralPipe} from './tools/pipes/month.plural.pipe';
-import {TimetableComponent} from './timetable/timetable.component';
-import {SetEventModalComponent} from './timetable/modal/set.event.component';
-import {TimepickerComponent} from './tools/timepicker.component';
 import {FormsModule} from '@angular/forms';
+import {FitAssistantComponent} from './fit.assistant/fit.assistant.component';
+import {SelectionAssistantComponent} from './selection.assistant/selection.assistant.component';
+import {TrainingComponent} from './selection.assistant/training.component';
+import {TrainingService} from './fit.assistant/service/training.service';
+import {DeleteModalComponent} from './selection.assistant/modal/delete.component';
+import {DiscountModalComponent} from './selection.assistant/modal/discount.component';
+import {InfoModalComponent} from './selection.assistant/modal/info.component';
+import {PlanningAssistantComponent} from './planning.assistant/planning.assistant.component';
+import {RouterModule} from '@angular/router';
+import {SetEventModalComponent} from './planning.assistant/modal/set.event.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TrainingTableComponent,
-    TrainingTableEntryComponent,
-    InfoModalComponent,
-    DiscountModalComponent,
-    TrainingTableEntryManagerComponent,
-    DeleteModalComponent,
     MonthPluralPipe,
-    TimetableComponent,
-    SetEventModalComponent,
-    TimepickerComponent
+    FitAssistantComponent,
+    SelectionAssistantComponent,
+    TrainingComponent,
+    DeleteModalComponent,
+    DiscountModalComponent,
+    InfoModalComponent,
+    PlanningAssistantComponent,
+    SetEventModalComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     NgbModule.forRoot(),
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot([
+      {path: 'plan', component: PlanningAssistantComponent},
+      {path: 'select', component: SelectionAssistantComponent},
+      {path: '', redirectTo: 'select',  pathMatch: 'full'},
+      // {path: '**', component: PageNotFound}
+    ], {useHash: true})
   ],
   providers: [TrainingService],
   bootstrap: [AppComponent],
