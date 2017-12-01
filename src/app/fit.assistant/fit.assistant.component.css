@@ -1,13 +1,15 @@
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
 }
 .step {
   position: relative;
-  min-height: 32px
+  min-height: 32px;
   /* circle-size */
-;
+}
+.step:focus {
+  outline: 0;
 }
 .step > div:first-child {
   position: static;
@@ -44,4 +46,5 @@
 .title {
   line-height: 32px;
   font-weight: bold;
+  cursor: pointer;
 }

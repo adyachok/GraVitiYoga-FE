@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-sm-3 offset-sm-2">
+    <div class="step" [routerLink]="['/select']">
+      <div>
+        <div class="circle">1</div>
+        <div class="line"></div>
+      </div>
+      <div>
+        <div class="title">Выбор пути</div>
+        <!--<div class="body">Body</div>-->
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="step" [routerLink]="['/plan']">
+      <div>
+        <div class="circle">2</div>
+        <div class="line"></div>
+      </div>
+      <div>
+        <div class="title">Выбор интенсивности</div>
+        <!--<div class="body">Body</div>-->
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="step">
+      <div>
+        <div class="circle">3</div>
+        <div class="line"></div>
+      </div>
+      <div>
+        <div class="title">Получить отчет</div>
+        <!--<div class="body">Body</div>-->
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<!--<app-selection-assistant></app-selection-assistant>-->
+<router-outlet></router-outlet>
