@@ -16,6 +16,8 @@ import {InfoModalComponent} from './selection.assistant/modal/info.component';
 import {PlanningAssistantComponent} from './planning.assistant/planning.assistant.component';
 import {RouterModule} from '@angular/router';
 import {SetEventModalComponent} from './planning.assistant/modal/set.event.component';
+import {TimepickerComponent} from './tools/timepicker.component';
+import {CalculationAssistantComponent} from './calculation.assistant/calculation.assistant.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import {SetEventModalComponent} from './planning.assistant/modal/set.event.compo
     DiscountModalComponent,
     InfoModalComponent,
     PlanningAssistantComponent,
-    SetEventModalComponent
+    SetEventModalComponent,
+    TimepickerComponent,
+    CalculationAssistantComponent
   ],
   imports: [
     BrowserModule,
