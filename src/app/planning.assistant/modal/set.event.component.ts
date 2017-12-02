@@ -1,8 +1,9 @@
-import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
+import {Component, TemplateRef, ViewChild} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {TrainingEvent} from '../model/training.event.model';
 import {SetEventService} from '../services/set.event.service';
+import {MarkEventService} from '../services/mark.event.service';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class SetEventModalComponent {
   private modalTpl: TemplateRef<any>;
   private event: TrainingEvent;
 
-  constructor(private modalService: NgbModal, private setEventService: SetEventService) {
+  constructor(private modalService: NgbModal, private setEventService: SetEventService,
+              private markEventService: MarkEventService) {
     this.setEventService.setEvent$.subscribe((event) => {
       this.event = event;
       this.open(this.modalTpl); });
@@ -24,7 +26,8 @@ export class SetEventModalComponent {
   open(content) {
     this.modalService.open(content).result.then((result) => {
       if (result === 'Set event done') {
-        console.log('Training time selection is done');
+        // console.log('Training time selection is done');
+        this.markEventService.announceEventMarking(this.event);
       }
     }, (reason) => {
       console.log('Dismissed ${this.getDismissReason(reason)}');
