@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Renderer, Renderer2} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Renderer, Renderer2} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {SetEventService} from './services/set.event.service';
 import {MarkEventService} from './services/mark.event.service';
@@ -67,8 +67,20 @@ export class PlanningAssistantComponent implements OnInit {
 
     // this.markEventCellsBusy(target, eventFinishTime);
     // this.renderer.setElementClass(target.nextElementSibling, 'selected', false);
+    const cellClass = target.attributes['class'].value;
+    if (cellClass) {
+      const cellClasses = cellClass.split(' ');
+      for (const item of cellClasses) {
+        if (item === 'selected') {
+          // TODO: should trigger edit and delete logic for event
+          console.log('YESSS!');
+          break;
+        }
+      }
+    }
 
     this.setEventService.announceEventSetting({
+      'trainingName': 'undefined',
       'startTime': eventStartTime,
       'finishTime': eventFinishTime,
       'weekDay': eventDay});
@@ -77,6 +89,7 @@ export class PlanningAssistantComponent implements OnInit {
       // TODO: check logic
       // TODO: event border logic
       // TODO: unselect logic
+      this.addMarkCellWithTrainingName(target, eventFinishTime);
       this.markEventCellsBusy(target, eventFinishTime);
     });
   }
@@ -89,6 +102,13 @@ export class PlanningAssistantComponent implements OnInit {
       eventFinishTime = eventFinishTime - 24;
     }
     return eventFinishTime + ':' + eventTimeArray[1];
+  }
+
+  private addMarkCellWithTrainingName(eventTarget: any, eventFinishTime: string): void {
+    const firstSelectedCell = this.getEventCells(eventTarget, eventFinishTime)[0];
+    console.log(firstSelectedCell);
+    // firstSelectedCell.nativeElement.
+    this.renderer.createText(firstSelectedCell, 'AAAA');
   }
 
   private markEventCellsBusy(eventTarget: any, eventFinishTime: string): void {
@@ -107,7 +127,7 @@ export class PlanningAssistantComponent implements OnInit {
     }
   }
 
-  private getEventCells(eventTarget: any, eventFinishTime: string): any[] {
+  private getEventCells(eventTarget: any, eventFinishTime: string): ElementRef[] {
     const cells = [eventTarget];
     while (true) {
       const nextSibling = eventTarget.nextElementSibling;

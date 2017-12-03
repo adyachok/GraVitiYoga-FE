@@ -15,7 +15,7 @@
     </div>
     <br>
     <label for="training-name">Виберите тренинг:</label>
-    <select class="form-control select-training-name" id="training-name">
+    <select class="form-control select-training-name" id="training-name" [(ngModel)]="chosenTrainingName" (change)="setEventName($event)">
       <option>Tренировка GraVitiYoga в группе</option>
       <option>Урок GraVitiYoga с персональным инструктором</option>
       <option>Урок классической йоги (дыхание, равновесие, растяжки)</option>

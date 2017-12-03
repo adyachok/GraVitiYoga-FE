@@ -15,6 +15,8 @@ export class SetEventModalComponent {
   @ViewChild('content')
   private modalTpl: TemplateRef<any>;
   private event: TrainingEvent;
+  private preselectedTrainingName = 'Tренировка GraVitiYoga в группе';
+  private chosenTrainingName = this.preselectedTrainingName;
 
   constructor(private modalService: NgbModal, private setEventService: SetEventService,
               private markEventService: MarkEventService) {
@@ -26,8 +28,9 @@ export class SetEventModalComponent {
   open(content) {
     this.modalService.open(content).result.then((result) => {
       if (result === 'Set event done') {
-        // console.log('Training time selection is done');
+        this.event.trainingName = this.chosenTrainingName;
         this.markEventService.announceEventMarking(this.event);
+        this.chosenTrainingName = this.preselectedTrainingName;
       }
     }, (reason) => {
       console.log('Dismissed ${this.getDismissReason(reason)}');
