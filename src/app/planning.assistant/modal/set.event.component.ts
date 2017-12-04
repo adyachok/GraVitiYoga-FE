@@ -17,11 +17,16 @@ export class SetEventModalComponent {
   private event: TrainingEvent;
   private preselectedTrainingName = 'Tренировка GraVitiYoga в группе';
   private chosenTrainingName = this.preselectedTrainingName;
+  private edit = false;
 
   constructor(private modalService: NgbModal, private setEventService: SetEventService,
               private markEventService: MarkEventService) {
     this.setEventService.setEvent$.subscribe((event) => {
       this.event = event;
+      if (event.trainingName !== 'undefined') {
+        this.chosenTrainingName = event.trainingName;
+        this.edit = true;
+      }
       this.open(this.modalTpl); });
   }
 

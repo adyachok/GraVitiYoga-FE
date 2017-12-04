@@ -6,16 +6,16 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="select">
+    <div class="select" *ngIf="!edit">
       Время занятия <strong>{{ event.startTime }}</strong> - <strong>{{ event.finishTime }}</strong>
     </div>
-    <div class="edit" *ngIf="false">
-      <!--Время начала занятия <app-timepicker [eventStartTime]="event.startTime"></app-timepicker>-->
+    <div class="edit" *ngIf="edit">
+      Время начала занятия <app-timepicker [eventStartTime]="event.startTime"></app-timepicker>
       Время окончания занятия {{ event.finishTime }}
     </div>
     <br>
     <label for="training-name">Виберите тренинг:</label>
-    <select class="form-control select-training-name" id="training-name" [(ngModel)]="chosenTrainingName" (change)="setEventName($event)">
+    <select class="form-control select-training-name" id="training-name" [(ngModel)]="chosenTrainingName">
       <option>Tренировка GraVitiYoga в группе</option>
       <option>Урок GraVitiYoga с персональным инструктором</option>
       <option>Урок классической йоги (дыхание, равновесие, растяжки)</option>
@@ -26,7 +26,9 @@
     </select>
   </div>
   <div class="modal-footer">
+    <button *ngIf="edit" type="button" class="btn btn-outline-dark btn-danger" (click)="c('Set event delete')">Удалить</button>
     <button type="button" class="btn btn-outline-dark btn-default" (click)="c('Close click')">Закрыть</button>
-    <button type="button" class="btn btn-outline-dark btn-success" (click)="c('Set event done')">Выбрать</button>
+    <button *ngIf="!edit" type="button" class="btn btn-outline-dark btn-success" (click)="c('Set event done')">Выбрать</button>
+    <button *ngIf="edit" type="button" class="btn btn-outline-dark btn-info" (click)="c('Set event done')">Редактировать</button>
   </div>
 </ng-template>

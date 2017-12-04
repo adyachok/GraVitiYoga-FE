@@ -2,6 +2,8 @@
   border-right: solid black 1px;
   border-bottom: solid black 1px;
   padding: 5px;
+  font-size: small;
+  font-weight: bold;
 }
 .timeslot:active {
   background-color: white;
