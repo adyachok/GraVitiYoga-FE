@@ -4,6 +4,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {TrainingEvent} from '../model/training.event.model';
 import {SetEventService} from '../services/set.event.service';
 import {MarkEventService} from '../services/mark.event.service';
+import {TrainingEventSelection} from '../model/training.event.selection.model';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class SetEventModalComponent {
 
   @ViewChild('content')
   private modalTpl: TemplateRef<any>;
-  private event: TrainingEvent;
+  private event: TrainingEventSelection;
   private preselectedTrainingName = 'Tренировка GraVitiYoga в группе';
   private chosenTrainingName = this.preselectedTrainingName;
   private edit = false;
@@ -23,8 +24,8 @@ export class SetEventModalComponent {
               private markEventService: MarkEventService) {
     this.setEventService.setEvent$.subscribe((event) => {
       this.event = event;
-      if (event.trainingName !== 'undefined') {
-        this.chosenTrainingName = event.trainingName;
+      if (event.trainingEvent.trainingName !== 'undefined') {
+        this.chosenTrainingName = event.trainingEvent.trainingName;
         this.edit = true;
       }
       this.open(this.modalTpl); });
@@ -33,12 +34,16 @@ export class SetEventModalComponent {
   open(content) {
     this.modalService.open(content).result.then((result) => {
       if (result === 'Set event done') {
-        this.event.trainingName = this.chosenTrainingName;
-        this.markEventService.announceEventMarking(this.event);
-        this.chosenTrainingName = this.preselectedTrainingName;
+        this.event.trainingEvent.trainingName = this.chosenTrainingName;
+      } else if (result === 'Set event delete') {
+        this.event.trainingEvent.trainingName = 'cancel';
       }
+      this.markEventService.announceEventMarking(this.event);
+      this.chosenTrainingName = this.preselectedTrainingName;
+      this.edit = false;
     }, (reason) => {
-      console.log('Dismissed ${this.getDismissReason(reason)}');
+      // console.log('Dismissed ${this.getDismissReason(reason)}');
+      this.edit = false;
     });
   }
 

@@ -1,6 +1,8 @@
+import {TimeModel} from './time.model';
+
 export class TrainingEvent {
   trainingName: string;
-  startTime: string;
-  finishTime: string;
+  startTime: TimeModel;
+  finishTime: TimeModel;
   weekDay: string;
 }

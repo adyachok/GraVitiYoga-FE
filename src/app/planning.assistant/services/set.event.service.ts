@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
-import {TrainingEvent} from '../model/training.event.model';
+import {TrainingEventSelection} from '../model/training.event.selection.model';
 
 @Injectable()
 export class SetEventService {
-  private setEventSource = new Subject<TrainingEvent>();
+  private setEventSource = new Subject<TrainingEventSelection>();
 
   setEvent$ = this.setEventSource.asObservable();
 
-  announceEventSetting(event: TrainingEvent) {
+  announceEventSetting(event: TrainingEventSelection) {
     this.setEventSource.next(event);
   }
 }
