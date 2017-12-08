@@ -25,4 +25,8 @@ export class TrainingEventSelection {
   checkEventTimeIntersection (otherTrainingEvent: TrainingEvent): boolean {
     return this.trainingEvent.intersect(otherTrainingEvent);
   }
+
+  intersect(other: TrainingEventSelection) {
+    return this.trainingEvent.intersect(other.trainingEvent);
+  }
 }

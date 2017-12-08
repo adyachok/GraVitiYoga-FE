@@ -3,6 +3,8 @@ import {ElementRef} from '@angular/core';
 import {TimeModelFactory} from './time.model.factory';
 import {TimeSlotModel} from './time.slot.model';
 import {TrainingEvent} from './training.event.model';
+import {TimeModel} from './time.model';
+import {time} from 'd3';
 
 
 
@@ -14,6 +16,14 @@ export class TrainingEventSelectionFactory {
     trainingEventSelection.selectedCells = TrainingEventSelectionFactory.getTrainingEventSelectedCells(event,
       finishTime.toString());
     return trainingEventSelection;
+  }
+
+  static buildFormData (name: string, startHour: number, startMinute: number, day: string) {
+    const start = new TimeModel(startHour, startMinute);
+    const finish = new TimeModel(startHour + 1, startMinute);
+    const timeSlot = new TimeSlotModel(start, finish, day);
+    const evt = new TrainingEvent(name, timeSlot);
+    return new TrainingEventSelection(evt);
   }
 
   private static prepareTrainingEventObject(event: any): TrainingEventSelection {

@@ -10,6 +10,7 @@ import {TrainingEventsSelections} from './model/training.events.selections';
 import {TrainingEventSelectionFactory} from './model/training.event.selection.factory';
 import {TrainingEventSelection} from './model/training.event.selection.model';
 import {TrainingEventEditMessageModel} from './model/training.event.edit.message.model';
+import {TimeModel} from './model/time.model';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class PlanningAssistantComponent implements OnInit {
   private cellsCounterHelper: CellsCounterHelper;
   private selectedTrainingEvents: TrainingEventsSelections;
   private  tempSelectedTrainingEvents: {[id: number]: TrainingEventSelection};
+  private planningTableCells: {[day: string]: {[startTime: number]: ElementRef }}
 
   constructor(private modalService: NgbModal, private setEventService: SetEventService,
               private markEventService: MarkEventService, private renderer2: Renderer2) {
@@ -51,21 +53,35 @@ export class PlanningAssistantComponent implements OnInit {
         this.selectedTrainingEvents.delete(evt, this.rendererHelper);
         return UpdateAction.DELETED;
       } else {
-        // TODO: check on conflicts
+        if (this.checkConflicts(msg)) {
+          return UpdateAction.CONFLICT;
+        }
+        evt.trainingEvent.trainingName = msg.name;
+        evt.trainingEvent.timeSlot.start = msg.start;
+        evt.trainingEvent.timeSlot.finish.hour = msg.start.hour + 1;
+        evt.trainingEvent.timeSlot.finish.minute = msg.start.minute;
         this.selectedTrainingEvents.put(evt, this.rendererHelper);
         return UpdateAction.UPDATED;
       }
     }
   }
 
+  private checkConflicts(msg: TrainingEventEditMessageModel) {
+    const evt = TrainingEventSelectionFactory.buildFormData(msg.name, msg.start.hour, msg.start.minute, msg.day);
+    const conflicts = this.selectedTrainingEvents.selection.filter(selection => selection.intersect(evt) &&
+      msg.id !== selection.id);
+    return conflicts.length > 0;
+  }
+
   timeSlotClick(evt: any) {
+    // TODO: better cell selection logic
     let eventObj = this.selectedTrainingEvents.searchOnCellClicked(evt);
     if (!eventObj) {
       eventObj = TrainingEventSelectionFactory.build(evt);
       this.tempSelectedTrainingEvents[eventObj.id] = eventObj;
     }
     const message = new TrainingEventEditMessageModel(eventObj.id, eventObj.trainingEvent.timeSlot.start,
-      eventObj.trainingEvent.trainingName);
+      eventObj.trainingEvent.trainingName, eventObj.trainingEvent.timeSlot.day);
     this.setEventService.announceEventSetting(message);
   }
 
