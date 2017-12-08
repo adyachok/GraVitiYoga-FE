@@ -44,25 +44,20 @@ export class TrainingEventsSelections {
     return this.selection[idx];
   }
 
-  private getOnStartFinishAndDay(trainingEventSelection: TrainingEventSelection):
-  TrainingEventSelection[] {
-    const trainings = this.selection.filter( event => (
-      event.trainingEvent.startTime.eq(trainingEventSelection.trainingEvent.startTime) &&
-      event.trainingEvent.finishTime.eq(trainingEventSelection.trainingEvent.finishTime) &&
-      event.trainingEvent.weekDay === trainingEventSelection.trainingEvent.weekDay));
-    return trainings;
+  private getOnStartFinishAndDay(trainingEvtSelection: TrainingEventSelection): TrainingEventSelection[] {
+    return this.selection.filter( event => event.trainingEvent.eq(trainingEvtSelection.trainingEvent));
   }
 
   searchOnTime(time: string, day: string, searchOnFinishTime = true): TrainingEventSelection[] {
     let trainings = [];
     if (searchOnFinishTime) {
       trainings = this.selection.filter(trainingEventSelection => (
-        trainingEventSelection.trainingEvent.finishTime.toString() === time &&
-        trainingEventSelection.trainingEvent.weekDay === day));
+        trainingEventSelection.trainingEvent.timeSlot.finish.toString() === time &&
+        trainingEventSelection.trainingEvent.timeSlot.day === day));
     } else {
       trainings = this.selection.filter(trainingEventSelection => (
-        trainingEventSelection.trainingEvent.startTime.toString() === time &&
-        trainingEventSelection.trainingEvent.weekDay === day));
+        trainingEventSelection.trainingEvent.timeSlot.start.toString() === time &&
+        trainingEventSelection.trainingEvent.timeSlot.day === day));
     }
     return trainings;
   }
@@ -70,7 +65,7 @@ export class TrainingEventsSelections {
   searchOnCellClicked(event: any): TrainingEventSelection {
     const target = event.currentTarget;
     const eventDay = target.attributes['data-day'].value;
-    const dayEvents = this.selection.filter( dayEvent => dayEvent.trainingEvent.weekDay === eventDay);
+    const dayEvents = this.selection.filter( dayEvent => dayEvent.trainingEvent.timeSlot.day === eventDay);
     if (dayEvents.length) {
       const selected = dayEvents.filter( dayEvent => dayEvent.isCellInSelectedCells(target));
       if (selected.length) {

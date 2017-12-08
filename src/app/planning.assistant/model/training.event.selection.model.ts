@@ -21,9 +21,6 @@ export class TrainingEventSelection {
   }
 
   checkEventTimeIntersection (otherTrainingEvent: TrainingEvent): boolean {
-    return this.trainingEvent.startTime.lt(otherTrainingEvent.finishTime) &&
-      this.trainingEvent.finishTime.gt(otherTrainingEvent.finishTime) ||
-      this.trainingEvent.startTime.gt(otherTrainingEvent.startTime) &&
-      this.trainingEvent.finishTime.gt(otherTrainingEvent.startTime);
+    return this.trainingEvent.intersect(otherTrainingEvent);
   }
 }

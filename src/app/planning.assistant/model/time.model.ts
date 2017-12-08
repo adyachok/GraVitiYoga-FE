@@ -7,7 +7,11 @@ export class TimeModel {
     this.minute = minute;
   }
 
-  toString() {
+  toMinutes(): number {
+    return this.hour * 60 + this.minute;
+  }
+
+  toString(): string {
     let minute = this.minute.toString();
     if (minute === '0' ) {
       minute = '00';
@@ -15,19 +19,23 @@ export class TimeModel {
     return '' + this.hour + ':' + minute;
   }
 
-  gt(other: TimeModel) {
-    const our = this.hour * 60 + this.minute;
-    const notOur = other.hour * 60 + other.minute;
-    return our > notOur;
+  gt(other: TimeModel): boolean {
+    return this.toMinutes() > other.toMinutes();
   }
 
-  lt (other: TimeModel) {
+  lt (other: TimeModel): boolean {
     return !this.gt(other);
   }
 
-  eq(other: TimeModel) {
-    const our = this.hour * 60 + this.minute;
-    const notOur = other.hour * 60 + other.minute;
-    return our === notOur;
+  eq(other: TimeModel): boolean {
+    return this.toMinutes() === other.toMinutes();
+  }
+
+  toId(): string {
+    let minute = this.minute.toString();
+    if (minute === '0' ) {
+      minute = '00';
+    }
+    return '' + this.hour + '-' + minute;
   }
 }

@@ -1,6 +1,8 @@
 import {TrainingEventSelection} from './training.event.selection.model';
 import {ElementRef} from '@angular/core';
 import {TimeModelFactory} from './time.model.factory';
+import {TimeSlotModel} from './time.slot.model';
+import {TrainingEvent} from './training.event.model';
 
 
 
@@ -8,9 +10,9 @@ export class TrainingEventSelectionFactory {
 
   static build (event: any) {
     const trainingEventSelection = TrainingEventSelectionFactory.prepareTrainingEventObject(event);
-    const finishTime = trainingEventSelection.trainingEvent.finishTime;
-    const selectedCells = TrainingEventSelectionFactory.getTrainingEventSelectedCells(event, finishTime.toString());
-    trainingEventSelection.selectedCells = selectedCells;
+    const finishTime = trainingEventSelection.trainingEvent.timeSlot.finish;
+    trainingEventSelection.selectedCells = TrainingEventSelectionFactory.getTrainingEventSelectedCells(event,
+      finishTime.toString());
     return trainingEventSelection;
   }
 
@@ -20,31 +22,9 @@ export class TrainingEventSelectionFactory {
     const eventFinishTime = this.setEventFinishTime(eventStartTime);
     const eventDay = eventTarget.attributes['data-day'].value;
 
-    const cellClass = eventTarget.attributes['class'].value;
-    const trainingEvent = {
-      'trainingName': 'undefined',
-      'startTime': TimeModelFactory.build(eventStartTime),
-      'finishTime': TimeModelFactory.build(eventFinishTime),
-      'weekDay': eventDay
-      };
-    // TODO: move logic to get selected
-    // if (cellClass) {
-    //   const cellClasses = cellClass.split(' ');
-    //   for (const item of cellClasses) {
-    //     if (item === 'selected') {
-    //       // Check if cell is start event cell
-    //       // TODO: modify logic for event name search
-    //       const eventName = eventTarget.attributes['data-training-name'];
-    //       if (!eventName) {
-    //         const events = this.searchTrainingEvent(eventTarget.attributes['data-finishTime'].value, eventDay);
-    //         if (events.length) {
-    //           eventObj = events[0];
-    //         }
-    //       }
-    //       break;
-    //     }
-    //   }
-    // }
+    const timeSlot = new TimeSlotModel(TimeModelFactory.build(eventStartTime),
+      TimeModelFactory.build(eventFinishTime), eventDay);
+    const trainingEvent = new TrainingEvent('undefined', timeSlot);
     return new TrainingEventSelection(trainingEvent);
   }
 
