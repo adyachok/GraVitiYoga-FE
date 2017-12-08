@@ -12,11 +12,12 @@ export class TimepickerComponent implements OnInit {
   time: NgbTimeStruct;
   hourStep = 1;
   minuteStep = 30;
-  @Output() notifyTimeSelected = new EventEmitter<NgbTimeStruct>();
+  @Output() timeSelected = new EventEmitter<NgbTimeStruct>();
 
 
   processTimeSelected(event: any) {
-    console.log(this.time);
+    this.timeSelected.emit(this.time);
+
   }
 
   ngOnInit(): void {

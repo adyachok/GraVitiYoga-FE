@@ -1,10 +1,11 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, ModalDismissReasons, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
 import {TrainingEvent} from '../model/training.event.model';
 import {SetEventService} from '../services/set.event.service';
 import {MarkEventService} from '../services/mark.event.service';
 import {TrainingEventSelection} from '../model/training.event.selection.model';
+import {TrainingEventEditMessageModel} from '../model/training.event.edit.message.model';
 
 
 @Component({
@@ -15,17 +16,18 @@ export class SetEventModalComponent {
 
   @ViewChild('content')
   private modalTpl: TemplateRef<any>;
-  private event: TrainingEventSelection;
+  private event: TrainingEventEditMessageModel;
   private preselectedTrainingName = 'Tренировка GraVitiYoga в группе';
   private chosenTrainingName = this.preselectedTrainingName;
   private edit = false;
+  private tempEventStartTimeHolder: NgbTimeStruct;
 
   constructor(private modalService: NgbModal, private setEventService: SetEventService,
               private markEventService: MarkEventService) {
     this.setEventService.setEvent$.subscribe((event) => {
       this.event = event;
-      if (event.trainingEvent.trainingName !== 'undefined') {
-        this.chosenTrainingName = event.trainingEvent.trainingName;
+      if (event.name !== 'undefined') {
+        this.chosenTrainingName = event.name;
         this.edit = true;
       }
       this.open(this.modalTpl); });
@@ -34,13 +36,17 @@ export class SetEventModalComponent {
   open(content) {
     this.modalService.open(content).result.then((result) => {
       if (result === 'Set event done') {
-        this.event.trainingEvent.trainingName = this.chosenTrainingName;
+        this.updateSelectedTrainingEventTime();
+        this.event.name = this.chosenTrainingName;
       } else if (result === 'Set event delete') {
-        this.event.trainingEvent.trainingName = 'cancel';
+        this.event.name = 'cancel';
       }
       this.markEventService.announceEventMarking(this.event);
+
       this.chosenTrainingName = this.preselectedTrainingName;
       this.edit = false;
+      this.event = null;
+      this.tempEventStartTimeHolder = null;
     }, (reason) => {
       // console.log('Dismissed ${this.getDismissReason(reason)}');
       this.edit = false;
@@ -54,6 +60,17 @@ export class SetEventModalComponent {
       return 'by clicking on a backdrop';
     } else {
       return  `with: ${reason}`;
+    }
+  }
+
+  processSelectedTime(timeStruct: NgbTimeStruct) {
+    this.tempEventStartTimeHolder = timeStruct;
+  }
+
+  updateSelectedTrainingEventTime() {
+    if (this.tempEventStartTimeHolder) {
+      this.event.start.hour = this.tempEventStartTimeHolder.hour;
+      this.event.start.minute = this.tempEventStartTimeHolder.minute;
     }
   }
 }

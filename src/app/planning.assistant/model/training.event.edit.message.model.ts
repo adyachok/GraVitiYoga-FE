@@ -7,7 +7,7 @@ export class TrainingEventEditMessageModel {
 
   constructor( id: number, start: TimeModel, name: string) {
     this.id = id;
-    this.start = Object.assign({}, start);
+    this.start = new TimeModel(start.hour, start.minute); // Object.assign({}, start);
     this.name = name;
   }
 }

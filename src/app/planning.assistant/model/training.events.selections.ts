@@ -10,7 +10,7 @@ export class TrainingEventsSelections {
 
   delete(trainingEventSelection: TrainingEventSelection, drawHelper: TrainingEventRendererHelper = null) {
     // TODO: remove training name and selected class
-    trainingEventSelection = this.get(trainingEventSelection);
+    trainingEventSelection = this.get(trainingEventSelection.id);
     if (trainingEventSelection) {
       this.selection.splice(this.selection.indexOf(trainingEventSelection), 1);
       if (drawHelper) {
@@ -31,17 +31,8 @@ export class TrainingEventsSelections {
     }
   }
 
-  get(trainingEventSelection: TrainingEventSelection): TrainingEventSelection {
-    const idx = this.selection.indexOf(trainingEventSelection);
-    if (idx < 0) {
-      const trainings = this.getOnStartFinishAndDay(trainingEventSelection);
-      if (trainings.length) {
-        return trainings[0];
-      } else {
-        return null;
-      }
-    }
-    return this.selection[idx];
+  get(id: number): TrainingEventSelection {
+    return this.searchOnId(id);
   }
 
   private getOnStartFinishAndDay(trainingEvtSelection: TrainingEventSelection): TrainingEventSelection[] {
@@ -73,5 +64,9 @@ export class TrainingEventsSelections {
       }
     }
     return null;
+  }
+
+  searchOnId(id: number) {
+    return this.selection.find(selection => selection.id === id);
   }
 }

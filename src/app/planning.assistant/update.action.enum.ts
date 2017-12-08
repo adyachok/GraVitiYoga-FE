@@ -1,5 +1,6 @@
 export enum UpdateAction {
   UPDATED,
   DELETED,
-  INSERTED
+  INSERTED,
+  CONFLICT
 }

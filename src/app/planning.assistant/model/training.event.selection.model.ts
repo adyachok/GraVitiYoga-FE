@@ -1,10 +1,12 @@
 import {TrainingEvent} from './training.event.model';
 
 export class TrainingEventSelection {
+  id: number;
   trainingEvent: TrainingEvent;
   selectedCells: any[];
 
   constructor(trainingEvent: TrainingEvent) {
+    this.id = new Date().getTime() / 1000;
     this.trainingEvent = trainingEvent;
     this.selectedCells = [];
   }

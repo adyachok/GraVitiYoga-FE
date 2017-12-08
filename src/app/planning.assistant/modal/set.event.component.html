@@ -7,11 +7,11 @@
   </div>
   <div class="modal-body">
     <div class="select" *ngIf="!edit">
-      Время занятия <strong>{{ event.trainingEvent.startTime }}</strong> - <strong>{{ event.trainingEvent.finishTime }}</strong>
+      Время занятия <strong>{{ event.start.toString() }}</strong> - <strong>{{ event.start.hour + 1 }}:{{ event.start.minute }}</strong>
     </div>
     <div class="edit" *ngIf="edit">
-      Время начала занятия <app-timepicker [eventStartTime]="event.trainingEvent.startTime"></app-timepicker>
-      Время окончания занятия {{ event.trainingEvent.finishTime }}
+      Время начала занятия <app-timepicker [eventStartTime]="event.start" (timeSelected)="processSelectedTime($event)"></app-timepicker>
+      Время продолжительности занятия <strong>1</strong> час.
     </div>
     <br>
     <label for="training-name">Виберите тренинг:</label>

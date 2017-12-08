@@ -9,6 +9,7 @@ import {UpdateAction} from './update.action.enum';
 import {TrainingEventsSelections} from './model/training.events.selections';
 import {TrainingEventSelectionFactory} from './model/training.event.selection.factory';
 import {TrainingEventSelection} from './model/training.event.selection.model';
+import {TrainingEventEditMessageModel} from './model/training.event.edit.message.model';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class PlanningAssistantComponent implements OnInit {
   private rendererHelper: TrainingEventRendererHelper;
   private cellsCounterHelper: CellsCounterHelper;
   private selectedTrainingEvents: TrainingEventsSelections;
+  private  tempSelectedTrainingEvents: {[id: number]: TrainingEventSelection};
 
   constructor(private modalService: NgbModal, private setEventService: SetEventService,
               private markEventService: MarkEventService, private renderer2: Renderer2) {
@@ -38,17 +40,19 @@ export class PlanningAssistantComponent implements OnInit {
     });
   }
 
-  private updateTrainingEvents(trainingEvt: TrainingEventSelection): UpdateAction {
-    const training = this.selectedTrainingEvents.get(trainingEvt);
+  private updateTrainingEvents(evt: TrainingEventSelection, msg: TrainingEventEditMessageModel): UpdateAction {
+    const training = this.selectedTrainingEvents.get(evt.id);
     if (!training) {
-      this.selectedTrainingEvents.put(trainingEvt, this.rendererHelper);
+      evt.trainingEvent.trainingName = msg.name;
+      this.selectedTrainingEvents.put(evt, this.rendererHelper);
       return UpdateAction.INSERTED;
     } else {
-      if (trainingEvt.trainingEvent.trainingName === 'cancel') {
-        this.selectedTrainingEvents.delete(trainingEvt, this.rendererHelper);
+      if (msg.name === 'cancel') {
+        this.selectedTrainingEvents.delete(evt, this.rendererHelper);
         return UpdateAction.DELETED;
       } else {
-        this.selectedTrainingEvents.put(trainingEvt, this.rendererHelper);
+        // TODO: check on conflicts
+        this.selectedTrainingEvents.put(evt, this.rendererHelper);
         return UpdateAction.UPDATED;
       }
     }
@@ -58,80 +62,47 @@ export class PlanningAssistantComponent implements OnInit {
     let eventObj = this.selectedTrainingEvents.searchOnCellClicked(evt);
     if (!eventObj) {
       eventObj = TrainingEventSelectionFactory.build(evt);
+      this.tempSelectedTrainingEvents[eventObj.id] = eventObj;
     }
-    this.setEventService.announceEventSetting(eventObj);
+    const message = new TrainingEventEditMessageModel(eventObj.id, eventObj.trainingEvent.timeSlot.start,
+      eventObj.trainingEvent.trainingName);
+    this.setEventService.announceEventSetting(message);
   }
 
-  private onGetSelectedTrainingEvent(trainingEvt: TrainingEventSelection, target: ElementRef) {
-    switch (this.updateTrainingEvents(trainingEvt)) {
+  private onGetSelectedTrainingEvent(message: TrainingEventEditMessageModel, target: ElementRef) {
+    const evt = this.getSelectedTrainingEvent(message);
+    switch (this.updateTrainingEvents(evt, message)) {
       case UpdateAction.DELETED:
-        this.rendererHelper.removeTrainingHTMLElement(trainingEvt.selectedCells[0]);
+        this.rendererHelper.removeTrainingHTMLElement(evt.selectedCells[0]);
         break;
       case UpdateAction.INSERTED:
-        let html = this.rendererHelper.buildTrainingHTMLElement(trainingEvt.trainingEvent);
-        this.rendererHelper.appendTrainingEventHTML(trainingEvt.selectedCells[0], html);
+        let html = this.rendererHelper.buildTrainingHTMLElement(evt.trainingEvent);
+        this.rendererHelper.appendTrainingEventHTML(evt.selectedCells[0], html);
         break;
       case UpdateAction.UPDATED:
-        this.rendererHelper.removeTrainingHTMLElement(trainingEvt.selectedCells[0]);
-        html = this.rendererHelper.buildTrainingHTMLElement(trainingEvt.trainingEvent);
-        this.rendererHelper.appendTrainingEventHTML(trainingEvt.selectedCells[0], html);
+        this.rendererHelper.removeTrainingHTMLElement(evt.selectedCells[0]);
+        html = this.rendererHelper.buildTrainingHTMLElement(evt.trainingEvent);
+        this.rendererHelper.appendTrainingEventHTML(evt.selectedCells[0], html);
+        break;
+      case UpdateAction.CONFLICT:
+        console.log('KONFLIKT:)');
     }
   }
 
-  // private addMarkCellWithTrainingName(eventTarget: ElementRef, trainingEvent: TrainingEvent): void {
-  //   const firstSelectedCell = this.getEventCells(eventTarget, trainingEvent)[0];
-  //   const trainingHTML = this.rendererHelper.buildTrainingHTMLElement(trainingEvent);
-  //   this.rendererHelper.appendTrainingEventHTML(eventTarget, trainingHTML);
-  // }
-  //
-  // private markEventCellsBusy(eventTarget: ElementRef, trainingEvent: TrainingEvent): void {
-  //   // Sets background class of event cells
-  //   const cells = this.getEventCells(eventTarget, trainingEvent);
-  //   for (const cell of cells) {
-  //     this.rendererHelper.selectCell(cell);
-  //   }
-  // }
-  //
-  // private unmarkEventCellsBusy(eventTarget: any, event: TrainingEvent): void {
-  //   // Unsets background class of event cells
-  //   const cells = this.getEventCells(eventTarget, event);
-  //   for (const cell of cells) {
-  //     this.rendererHelper.unselectCell(cell);
-  //   }
-  // }
-  //
-  // private getEventCells(eventTarget: any, event: TrainingEvent): ElementRef[] {
-  //   const cells = [eventTarget];
-  //   let goBackInTime = false;
-  //   if (eventTarget.attributes['data-startTime'].value !== event.startTime) {
-  //     goBackInTime = true;
-  //   }
-  //   while (true) {
-  //     const nextSibling = eventTarget.nextElementSibling;
-  //     if (nextSibling && nextSibling.attributes['data-startTime'].value !== event.finishTime) {
-  //       cells.push(nextSibling);
-  //       eventTarget = nextSibling;
-  //     } else {
-  //       break;
-  //     }
-  //   }
-  //   if (goBackInTime) {
-  //     while (true) {
-  //       const prevSibling = eventTarget.previousElementSibling;
-  //       if (prevSibling && prevSibling.attributes['data-startTime'].value !== event.startTime) {
-  //         cells.push(prevSibling);
-  //         eventTarget = prevSibling;
-  //       } else {
-  //         break;
-  //       }
-  //     }
-  //   }
-  //   return cells;
-  // }
+  private getSelectedTrainingEvent(message: TrainingEventEditMessageModel): TrainingEventSelection {
+    let evt = this.tempSelectedTrainingEvents[message.id];
+    if (!evt) {
+      evt = this.selectedTrainingEvents.searchOnId(message.id);
+    } else {
+      delete this.tempSelectedTrainingEvents[message.id];
+    }
+    return evt;
+  }
 
   ngOnInit() {
     this.timeSlots = this.cellsCounterHelper.buidTimeSlots(this.start, this.stop, this.step);
     this.selectedTrainingEvents = new TrainingEventsSelections();
+    this.tempSelectedTrainingEvents = {};
   }
 }
 
