@@ -40,4 +40,15 @@ export class TrainingEventRendererHelper {
     const trainingRow = cell.querySelector('.training-name');
     this.renderer2.removeChild(cell, trainingRow);
   }
+
+  getSiblings(cell: any) {
+    const parent = this.renderer2.parentNode(cell);
+    const children = [];
+    for (const node of parent.childNodes) {
+      if (node.nodeName === 'DIV') {
+        children.push(node);
+      }
+    }
+    return children;
+  }
 }

@@ -10,7 +10,8 @@ import {TrainingEventsSelections} from './model/training.events.selections';
 import {TrainingEventSelectionFactory} from './model/training.event.selection.factory';
 import {TrainingEventSelection} from './model/training.event.selection.model';
 import {TrainingEventEditMessageModel} from './model/training.event.edit.message.model';
-import {TimeModel} from './model/time.model';
+import {TimetableModel} from './model/timetable/timetable.model';
+
 
 
 @Component({
@@ -30,12 +31,14 @@ export class PlanningAssistantComponent implements OnInit {
   private cellsCounterHelper: CellsCounterHelper;
   private selectedTrainingEvents: TrainingEventsSelections;
   private  tempSelectedTrainingEvents: {[id: number]: TrainingEventSelection};
-  private planningTableCells: {[day: string]: {[startTime: number]: ElementRef }}
+  private planningTableCells: {[day: string]: {[startTime: number]: ElementRef }};
+  private timetable: TimetableModel;
 
   constructor(private modalService: NgbModal, private setEventService: SetEventService,
               private markEventService: MarkEventService, private renderer2: Renderer2) {
     this.rendererHelper = new TrainingEventRendererHelper(renderer2);
     this.cellsCounterHelper = new CellsCounterHelper();
+    this.timetable = new TimetableModel(this.rendererHelper);
 
     this.markEventService.markEvent$.subscribe((evt) => {
       this.onGetSelectedTrainingEvent(evt, this.eventTarget);
@@ -74,7 +77,7 @@ export class PlanningAssistantComponent implements OnInit {
   }
 
   timeSlotClick(evt: any) {
-    // TODO: better cell selection logic
+    this.timetable.feed(evt);
     let eventObj = this.selectedTrainingEvents.searchOnCellClicked(evt);
     if (!eventObj) {
       eventObj = TrainingEventSelectionFactory.build(evt);

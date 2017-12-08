@@ -4,7 +4,6 @@ import {TimeModelFactory} from './time.model.factory';
 import {TimeSlotModel} from './time.slot.model';
 import {TrainingEvent} from './training.event.model';
 import {TimeModel} from './time.model';
-import {time} from 'd3';
 
 
 
