@@ -38,15 +38,20 @@ export class TrainingEventRendererHelper {
 
   removeTrainingHTMLElement(cell: any) {
     const trainingRow = cell.querySelector('.training-name');
-    this.renderer2.removeChild(cell, trainingRow);
+    if (trainingRow) {
+      this.renderer2.removeChild(cell, trainingRow);
+    }
   }
 
-  getSiblings(cell: any) {
+  getSiblings(cell: any): any[] {
     const parent = this.renderer2.parentNode(cell);
     const children = [];
     for (const node of parent.childNodes) {
       if (node.nodeName === 'DIV') {
-        children.push(node);
+        const klass = node.attributes['class'];
+        if ( klass && klass.value.split(' ')[0] === 'timeslot') {
+          children.push(node);
+        }
       }
     }
     return children;

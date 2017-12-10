@@ -1,7 +1,7 @@
 import {TimetableCellModel} from './timetable.cell.model';
 import {Settings} from '../../../settings/settings';
 import {TrainingEventRendererHelper} from '../../helper/renderer.helper';
-import {Renderer2} from '@angular/core';
+import {ElementRef, Renderer2} from '@angular/core';
 import {TimeModelFactory} from '../time.model.factory';
 import {CellsCounterHelper} from '../../helper/cells.counter.helper';
 import {TimeSlotModel} from '../time.slot.model';
@@ -18,29 +18,40 @@ export class TimetableColumnModel {
     this.rendererHelper = renderer;
     const siblings = this.rendererHelper.getSiblings(event.currentTarget);
     for (const sibling of siblings) {
-      const eventStartTime = TimeModelFactory.build(eventTarget.attributes['data-startTime'].value);
-      const eventFinishTime = TimeModelFactory.build(eventTarget.attributes['data-finishTime'].value);
+      const eventStartTime = TimeModelFactory.build(sibling.attributes['data-startTime'].value);
+      const eventFinishTime = TimeModelFactory.build(sibling.attributes['data-finishTime'].value);
       const timeSlot = new TimeSlotModel(eventStartTime, eventFinishTime, this.day);
       const cell = new TimetableCellModel(timeSlot, sibling);
       this.cells.push(cell);
     }
   }
 
-  getCell(startTime: number) {
-    return this.cells.find(cell => cell.time.start.toMinutes() === startTime);
+  getCell(startTime: number): TimetableCellModel {
+    return this.cells.find(cell => {
+      return cell.time.start.toMinutes() === startTime;
+    });
   }
 
-  cetCellOnFinishTime(day: string, finishTime: number) {
+  getCellOnFinishTime(day: string, finishTime: number): TimetableCellModel {
     return this.cells.find(cell => cell.time.day === day && cell.time.start.toMinutes() === finishTime);
   }
 
-  getCells(day: string, startTime: number, finishTime: number) {
-    this.getStartTimes(startTime);
+  getCells(day: string, startTime: number, finishTime: number): ElementRef[] {
+    const elArray = [];
+    for (const t of this.getStartTimes(startTime)) {
+      const cell = this.getCell(t);
+      if (cell) {
+        elArray.push(cell.el);
+      }
+    }
+    return elArray;
   }
 
-  private getStartTimes(startTime: number) {
+  private getStartTimes(startTime: number): number[] {
+    const startTimes = [];
     for (let t = startTime; t < (startTime + Settings.trainingDuration); t += Settings.timeSlotInterval) {
-      this.getCell(t);
+      startTimes.push(t);
     }
+    return startTimes;
   }
 }

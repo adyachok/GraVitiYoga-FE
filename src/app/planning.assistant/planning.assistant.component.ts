@@ -59,10 +59,15 @@ export class PlanningAssistantComponent implements OnInit {
         if (this.checkConflicts(msg)) {
           return UpdateAction.CONFLICT;
         }
+        this.selectedTrainingEvents.delete(evt, this.rendererHelper);
+        this.rendererHelper.removeTrainingHTMLElement(evt.selectedCells[0]);
         evt.trainingEvent.trainingName = msg.name;
         evt.trainingEvent.timeSlot.start = msg.start;
         evt.trainingEvent.timeSlot.finish.hour = msg.start.hour + 1;
         evt.trainingEvent.timeSlot.finish.minute = msg.start.minute;
+        evt.selectedCells = this.timetable.getCells(evt.trainingEvent.timeSlot.day,
+          evt.trainingEvent.timeSlot.start.toMinutes(),
+          evt.trainingEvent.timeSlot.finish.toMinutes());
         this.selectedTrainingEvents.put(evt, this.rendererHelper);
         return UpdateAction.UPDATED;
       }
@@ -99,7 +104,6 @@ export class PlanningAssistantComponent implements OnInit {
         this.rendererHelper.appendTrainingEventHTML(evt.selectedCells[0], html);
         break;
       case UpdateAction.UPDATED:
-        this.rendererHelper.removeTrainingHTMLElement(evt.selectedCells[0]);
         html = this.rendererHelper.buildTrainingHTMLElement(evt.trainingEvent);
         this.rendererHelper.appendTrainingEventHTML(evt.selectedCells[0], html);
         break;
