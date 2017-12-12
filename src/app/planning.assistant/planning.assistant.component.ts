@@ -2,7 +2,6 @@ import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {SetEventService} from './services/set.event.service';
 import {MarkEventService} from './services/mark.event.service';
-import {TrainingEvent} from './model/training.event.model';
 import {TrainingEventRendererHelper} from './helper/renderer.helper';
 import {CellsCounterHelper} from './helper/cells.counter.helper';
 import {UpdateAction} from './update.action.enum';
@@ -11,6 +10,7 @@ import {TrainingEventSelectionFactory} from './model/training.event.selection.fa
 import {TrainingEventSelection} from './model/training.event.selection.model';
 import {TrainingEventEditMessageModel} from './model/training.event.edit.message.model';
 import {TimetableModel} from './model/timetable/timetable.model';
+import {Settings} from '../settings/settings';
 
 
 
@@ -21,17 +21,16 @@ import {TimetableModel} from './model/timetable/timetable.model';
   providers: [SetEventService, MarkEventService]
 })
 export class PlanningAssistantComponent implements OnInit {
-  @Input() start = 8;
-  @Input() stop = 21;
-  @Input() step = 0.5;
+  private start = Settings.workDayStart.hour;
+  private stop = Settings.workDayFinish.hour;
+  private step = Settings.timeSlotInterval;
+  private days = Settings.weekDays;
   private timeSlots: string[][];
-  days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница'];
   private eventTarget: any;
   private rendererHelper: TrainingEventRendererHelper;
   private cellsCounterHelper: CellsCounterHelper;
   private selectedTrainingEvents: TrainingEventsSelections;
   private  tempSelectedTrainingEvents: {[id: number]: TrainingEventSelection};
-  private planningTableCells: {[day: string]: {[startTime: number]: ElementRef }};
   private timetable: TimetableModel;
 
   constructor(private modalService: NgbModal, private setEventService: SetEventService,
@@ -47,7 +46,9 @@ export class PlanningAssistantComponent implements OnInit {
 
   private updateTrainingEvents(evt: TrainingEventSelection, msg: TrainingEventEditMessageModel): UpdateAction {
     const training = this.selectedTrainingEvents.get(evt.id);
-    if (!training) {
+    if (this.checkConflicts(msg)) {
+      return UpdateAction.CONFLICT;
+    } else if (!training) {
       evt.trainingEvent.trainingName = msg.name;
       this.selectedTrainingEvents.put(evt, this.rendererHelper);
       return UpdateAction.INSERTED;
@@ -56,9 +57,6 @@ export class PlanningAssistantComponent implements OnInit {
         this.selectedTrainingEvents.delete(evt, this.rendererHelper);
         return UpdateAction.DELETED;
       } else {
-        if (this.checkConflicts(msg)) {
-          return UpdateAction.CONFLICT;
-        }
         this.selectedTrainingEvents.delete(evt, this.rendererHelper);
         this.rendererHelper.removeTrainingHTMLElement(evt.selectedCells[0]);
         evt.trainingEvent.trainingName = msg.name;
@@ -75,6 +73,11 @@ export class PlanningAssistantComponent implements OnInit {
   }
 
   private checkConflicts(msg: TrainingEventEditMessageModel) {
+    if (msg.start.toMinutes() < Settings.workDayStart.toMinutes()) {
+      return true;
+    } else if (msg.start.toMinutes() + Settings.trainingDuration > Settings.workDayFinish.toMinutes()) {
+      return true;
+    }
     const evt = TrainingEventSelectionFactory.buildFormData(msg.name, msg.start.hour, msg.start.minute, msg.day);
     const conflicts = this.selectedTrainingEvents.selection.filter(selection => selection.intersect(evt) &&
       msg.id !== selection.id);
