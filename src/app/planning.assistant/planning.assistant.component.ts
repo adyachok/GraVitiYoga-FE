@@ -24,7 +24,7 @@ export class PlanningAssistantComponent implements OnInit, AfterViewInit  {
   private start = Settings.workDayStart.hour;
   private stop = Settings.workDayFinish.hour;
   private step = Settings.timeSlotInterval;
-  private days = Settings.weekDays;
+  days = Settings.weekDays;
   private timeSlots: string[][];
   private rendererHelper: TrainingEventRendererHelper;
   private cellsCounterHelper: CellsCounterHelper;
