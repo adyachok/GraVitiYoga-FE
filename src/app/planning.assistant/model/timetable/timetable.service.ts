@@ -1,15 +1,13 @@
 import {TimetableColumnModel} from './timetable.column.model';
-import {ElementRef, Renderer2} from '@angular/core';
-import {TrainingEventRendererHelper} from '../../helper/renderer.helper';
+import {ElementRef, Injectable} from '@angular/core';
 import {TimetableCellModel} from './timetable.cell.model';
 
-export class TimetableModel {
+Injectable()
+export class TimetableService {
   columns: TimetableColumnModel[];
-  renderer: TrainingEventRendererHelper;
 
-  constructor(renderer: TrainingEventRendererHelper) {
+  constructor() {
     this.columns = [];
-    this.renderer = renderer;
   }
 
   getCell(day: string, startTime: number) {
@@ -40,7 +38,7 @@ export class TimetableModel {
     const target = event.currentTarget;
     const eventDay = target.attributes['data-day'].value;
     if (!this.findColumnByDay(eventDay)) {
-      this.columns.push(new TimetableColumnModel(event, this.renderer));
+      this.columns.push(new TimetableColumnModel(event));
     }
   }
 

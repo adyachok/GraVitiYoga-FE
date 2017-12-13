@@ -18,6 +18,7 @@ import {RouterModule} from '@angular/router';
 import {SetEventModalComponent} from './planning.assistant/modal/set.event.component';
 import {TimepickerComponent} from './tools/timepicker.component';
 import {CalculationAssistantComponent} from './calculation.assistant/calculation.assistant.component';
+import {TrainingEventSelectionService} from './planning.assistant/services/training.event.selection.service';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import {CalculationAssistantComponent} from './calculation.assistant/calculation
       // {path: '**', component: PageNotFound}
     ], {useHash: true})
   ],
-  providers: [TrainingService],
+  providers: [TrainingService, TrainingEventSelectionService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

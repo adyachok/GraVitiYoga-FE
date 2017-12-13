@@ -6,11 +6,11 @@ import {TrainingEventEditMessageModel} from '../model/training.event.edit.messag
 
 @Injectable()
 export class MarkEventService {
-  private markEventSource = new Subject<TrainingEventEditMessageModel>(); // TrainingEventSelection>();
+  private markEventSource = new Subject<TrainingEventEditMessageModel>();
 
-  markEvent$ = this.markEventSource.asObservable();
+  events$ = this.markEventSource.asObservable();
 
-  announceEventMarking(event: TrainingEventEditMessageModel) {
+  announce(event: TrainingEventEditMessageModel) {
     this.markEventSource.next(event);
   }
 }

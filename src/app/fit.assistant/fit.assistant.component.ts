@@ -1,27 +1,31 @@
 import {Component, OnInit} from '@angular/core';
-import {WeekPlan} from './model/week.plan.model';
 import {TrainingService} from './service/training.service';
 import {Training} from './model/training.model';
-import {SelectedTraining} from './model/selected.training.model';
-import {TrainingEventSelection} from '../planning.assistant/model/training.event.selection.model';
+import {TrainingEventService} from './service/training.event.setvice';
+import {TrainingEventSelectionService} from '../planning.assistant/services/training.event.selection.service';
+
 
 @Component({
   selector : 'app-fit-assistant',
   templateUrl: 'fit.assistant.component.html',
-  styleUrls: ['fit.assistant.component.css']
+  styleUrls: ['fit.assistant.component.css'],
+  providers: [TrainingEventService]
 })
 export class FitAssistantComponent implements OnInit {
-  selectedTrainings: SelectedTraining[];
-  selectedTrainingsEvents: TrainingEventSelection[];
   trainings: Training[];
   errorMessage: string;
 
-  constructor(private trainingService: TrainingService) {}
+  constructor(private trainingService: TrainingService,
+              private trainingEventService: TrainingEventService,
+              private trainingEventSelectionService: TrainingEventSelectionService) { }
 
   ngOnInit(): void {
-    this.selectedTrainings = [];
     this.trainingService.getTrainingsMock()
-      .subscribe(trainings => this.trainings = trainings,
-        error => this.errorMessage = <any>error);
+      .subscribe(trainings => {
+        this.trainings = trainings;
+        },
+          error => this.errorMessage = <any>error
+      );
+
   }
 }

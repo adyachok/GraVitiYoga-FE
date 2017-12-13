@@ -1,4 +1,4 @@
-<div>
+<div #timetable>
   <div class="row">
     <div class="col-sm-2 timetable-day" *ngFor="let day of days">
       <div class="day">{{ day }}</div>
@@ -8,6 +8,9 @@
           <div class="offset-sm-1 col-sm-11">
             {{ timeSlot[0] }} - {{ timeSlot[1] }}
           </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 training-name"><span class="point">.</span></div>
         </div>
       </div>
     </div>

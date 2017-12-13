@@ -24,7 +24,7 @@ export class SetEventModalComponent {
 
   constructor(private modalService: NgbModal, private setEventService: SetEventService,
               private markEventService: MarkEventService) {
-    this.setEventService.setEvent$.subscribe((event) => {
+    this.setEventService.events$.subscribe((event) => {
       this.event = event;
       if (event.name !== 'undefined') {
         this.chosenTrainingName = event.name;
@@ -38,11 +38,11 @@ export class SetEventModalComponent {
       if (result === 'Set event done') {
         this.updateSelectedTrainingEventTime();
         this.event.name = this.chosenTrainingName;
+        this.markEventService.announce(this.event);
       } else if (result === 'Set event delete') {
         this.event.name = 'cancel';
+        this.markEventService.announce(this.event);
       }
-      this.markEventService.announceEventMarking(this.event);
-
       this.chosenTrainingName = this.preselectedTrainingName;
       this.edit = false;
       this.event = null;

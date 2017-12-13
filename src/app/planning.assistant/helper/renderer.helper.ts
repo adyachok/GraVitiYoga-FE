@@ -1,59 +1,40 @@
 import {TrainingEvent} from '../model/training.event.model';
-import {ElementRef, Renderer2} from '@angular/core';
+import {Renderer2} from '@angular/core';
 
 export class TrainingEventRendererHelper {
 
   constructor(private renderer2: Renderer2) {}
 
-  selectCell(cell: any): void {
+  selectCell(cell: Element): void {
     // Cell is event.target.nextElementSibling
     this.renderer2.addClass(cell, 'selected');
   }
 
-  unselectCell(cell: any): void {
+  unselectCell(cell: Element): void {
     this.renderer2.removeClass(cell, 'selected');
   }
 
-  buildTrainingHTMLElement(trainingEvent: TrainingEvent): ElementRef {
-    const row = this.renderer2.createElement('div');
-    this.renderer2.addClass(row, 'row');
-    this.renderer2.addClass(row, 'training-name');
-
-    const col = this.renderer2.createElement('div');
-    this.renderer2.addClass(col, 'col-sm-12');
-    const text = this.renderer2.createText(trainingEvent.trainingName);
-    this.renderer2.appendChild(col, text);
-
-    this.renderer2.appendChild(row, col);
-    return row;
+  appendTrainingEventHTML(eventTarget: Element, trainingEvent: TrainingEvent): void {
+    const trainingRow = eventTarget.querySelector('.training-name');
+    if (trainingRow) {
+      trainingRow.innerHTML = '';
+      const span = this.renderer2.createElement('span');
+      this.renderer2.addClass(span, 'training-name');
+      const text = this.renderer2.createText(trainingEvent.trainingName);
+      this.renderer2.appendChild(span, text);
+      this.renderer2.appendChild(trainingRow, span);
+    }
   }
 
-  appendTrainingEventHTML(eventTarget: ElementRef, trainingEventHTML: ElementRef) {
-    this.renderer2.appendChild(eventTarget, trainingEventHTML);
-  }
-
-  setDataTrainingElement(eventTarget: ElementRef, trainingEvt: TrainingEvent) {
-    this.renderer2.setAttribute(eventTarget, 'data-training-name', trainingEvt.trainingName);
-  }
-
-  removeTrainingHTMLElement(cell: any) {
+  removeTrainingHTMLElement(cell: Element): void {
     const trainingRow = cell.querySelector('.training-name');
     if (trainingRow) {
-      this.renderer2.removeChild(cell, trainingRow);
+      trainingRow.innerHTML = '';
+      const span = this.renderer2.createElement('span');
+      this.renderer2.addClass(span, 'point');
+      const text = this.renderer2.createText('.');
+      this.renderer2.appendChild(span, text);
+      this.renderer2.appendChild(trainingRow, span);
     }
-  }
-
-  getSiblings(cell: any): any[] {
-    const parent = this.renderer2.parentNode(cell);
-    const children = [];
-    for (const node of parent.childNodes) {
-      if (node.nodeName === 'DIV') {
-        const klass = node.attributes['class'];
-        if ( klass && klass.value.split(' ')[0] === 'timeslot') {
-          children.push(node);
-        }
-      }
-    }
-    return children;
   }
 }

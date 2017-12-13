@@ -9,14 +9,12 @@ import {TimeSlotModel} from '../time.slot.model';
 export class TimetableColumnModel {
   cells: TimetableCellModel[];
   day: string;
-  private rendererHelper: TrainingEventRendererHelper;
 
-  constructor(event: any, renderer: TrainingEventRendererHelper) {
+  constructor(event: any) {
     this.cells = [];
     const eventTarget = event.currentTarget;
     this.day = eventTarget.attributes['data-day'].value;
-    this.rendererHelper = renderer;
-    const siblings = this.rendererHelper.getSiblings(event.currentTarget);
+    const siblings = this.getSiblings(event.currentTarget);
     for (const sibling of siblings) {
       const eventStartTime = TimeModelFactory.build(sibling.attributes['data-startTime'].value);
       const eventFinishTime = TimeModelFactory.build(sibling.attributes['data-finishTime'].value);
@@ -24,6 +22,21 @@ export class TimetableColumnModel {
       const cell = new TimetableCellModel(timeSlot, sibling);
       this.cells.push(cell);
     }
+  }
+
+  getSiblings(eventTarget: EventTarget): any[] {
+    const timeslots = [];
+    const node = <Node> event.currentTarget;
+    const children = <any> node.parentElement.childNodes;
+    for (const child of children) {
+      if (child.nodeName === 'DIV') {
+        const klass = child.attributes['class'];
+        if ( klass && klass.value.split(' ')[0] === 'timeslot') {
+          timeslots.push(child);
+        }
+      }
+    }
+    return timeslots;
   }
 
   getCell(startTime: number): TimetableCellModel {
