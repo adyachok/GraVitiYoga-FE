@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Training} from '../fit.assistant/model/training.model';
 import {SelectedTraining} from '../fit.assistant/model/selected.training.model';
-import {TrainingSelectUndoService} from './service/training.unselect.service';
 import {TrainingSelectDoService} from './service/training.select.do.service';
-
+import {TrainingSelectUndoService} from './service/training.select.undo.service';
 
 
 @Component({

@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
-
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {TrainingSelectUndoService} from '../service/training.unselect.service';
+import {TrainingSelectUndoService} from '../service/training.select.undo.service';
 
 
 @Component({
