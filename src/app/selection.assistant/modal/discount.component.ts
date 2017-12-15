@@ -1,9 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-
+import {Component, Input, OnInit} from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {DiscountPolicy} from '../../fit.assistant/model/discount.policy.model';
-import {TrainingSelectService} from '../service/training.select.service';
-
+import {TrainingSelectDoService} from '../service/training.select.do.service';
 
 
 @Component({
@@ -22,7 +20,7 @@ export class DiscountModalComponent implements OnInit {
   selectedDiscount = 0;
   private _selectedDiscount: number;
 
-  constructor(private modalService: NgbModal, private trainingSelectService: TrainingSelectService) {}
+  constructor(private modalService: NgbModal, private trainingSelectService: TrainingSelectDoService) {}
 
   open(content) {
     this.modalService.open(content).result.then((result) => {
@@ -42,7 +40,7 @@ export class DiscountModalComponent implements OnInit {
       this.selected = true;
     }
     // Send selected discounted price
-    this.trainingSelectService.announceTrainingSelection(this.customerPrice);
+    this.trainingSelectService.announce(this.customerPrice);
   }
 
   private processSelected() {

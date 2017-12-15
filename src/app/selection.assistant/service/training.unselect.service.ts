@@ -5,9 +5,9 @@ import {Subject} from 'rxjs/Subject';
 export class TrainingUnselectService {
   private unselectedTrainingSource = new Subject<boolean>();
 
-  unselectedTraining$ = this.unselectedTrainingSource.asObservable();
+  events$ = this.unselectedTrainingSource.asObservable();
 
-  announceTrainingunSelection(unselected: boolean) {
+  announce(unselected: boolean) {
     this.unselectedTrainingSource.next(unselected);
   }
 }

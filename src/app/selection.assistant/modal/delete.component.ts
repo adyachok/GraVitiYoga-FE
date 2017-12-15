@@ -16,7 +16,7 @@ export class DeleteModalComponent {
   open(content) {
     this.modalService.open(content).result.then((result) => {
       if (result === 'Unselection done') {
-        this.trainingUnselectService.announceTrainingunSelection(true);
+        this.trainingUnselectService.announce(true);
       }
     }, (reason) => {
       console.log('Dismissed ${this.getDismissReason(reason)}');
