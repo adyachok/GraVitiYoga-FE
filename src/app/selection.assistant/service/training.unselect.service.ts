@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 
 @Injectable()
-export class TrainingUnselectService {
+export class TrainingSelectUndoService {
   private unselectedTrainingSource = new Subject<boolean>();
 
   events$ = this.unselectedTrainingSource.asObservable();

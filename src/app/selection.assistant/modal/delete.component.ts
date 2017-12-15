@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {TrainingUnselectService} from '../service/training.unselect.service';
+import {TrainingSelectUndoService} from '../service/training.unselect.service';
 
 
 @Component({
@@ -11,7 +11,7 @@ import {TrainingUnselectService} from '../service/training.unselect.service';
 export class DeleteModalComponent {
   @Input() name: string;
 
-  constructor(private modalService: NgbModal, private trainingUnselectService: TrainingUnselectService) {}
+  constructor(private modalService: NgbModal, private trainingUnselectService: TrainingSelectUndoService) {}
 
   open(content) {
     this.modalService.open(content).result.then((result) => {
