@@ -18,14 +18,14 @@ export class TrainingComponent {
   canDelete = false;
 
   constructor(private trainingSelectDoService: TrainingSelectDoService,
-              private trainingUnselectService: TrainingSelectUndoService) {
+              private trainingSelectUndoService: TrainingSelectUndoService) {
     trainingSelectDoService.events$.subscribe(
       selectedDuration => {
         this.notify.emit({'trainingName': this.training.name,
           'duration': selectedDuration, 'selected': true });
         this.canDelete = true;
       });
-    trainingUnselectService.events$.subscribe( unselected => {
+    trainingSelectUndoService.events$.subscribe( unselected => {
       this.notify.emit(
         {
           'trainingName': this.training.name,
