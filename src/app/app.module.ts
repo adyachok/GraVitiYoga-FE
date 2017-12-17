@@ -45,6 +45,7 @@ import {TrainingSelectService} from './selection.assistant/service/training.sele
     RouterModule.forRoot([
       {path: 'plan', component: PlanningAssistantComponent},
       {path: 'select', component: SelectionAssistantComponent},
+      {path: 'calculate', component: CalculationAssistantComponent},
       {path: '', redirectTo: 'select',  pathMatch: 'full'},
       // {path: '**', component: PageNotFound}
     ], {useHash: true})

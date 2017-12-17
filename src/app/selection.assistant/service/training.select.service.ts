@@ -37,11 +37,11 @@ export class TrainingSelectService {
     return this.selectedTrainings.length === 0;
   }
 
-  values() {
+  values(): SelectedTraining[] {
     return this.selectedTrainings;
   }
 
-  names() {
+  names(): string[] {
     return this.selectedTrainings.map(training => training.trainingName);
   }
 }
