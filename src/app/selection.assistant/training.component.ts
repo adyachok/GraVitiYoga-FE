@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Training} from '../fit.assistant/model/training.model';
 import {SelectedTraining} from '../fit.assistant/model/selected.training.model';
 import {TrainingSelectDoService} from './service/training.select.do.service';
 import {TrainingSelectUndoService} from './service/training.select.undo.service';
+import {TrainingSelectService} from './service/training.select.service';
 
 
 @Component({
@@ -11,13 +12,14 @@ import {TrainingSelectUndoService} from './service/training.select.undo.service'
   styleUrls: ['training.component.css'],
   providers: [TrainingSelectDoService, TrainingSelectUndoService]
 })
-export class TrainingComponent {
+export class TrainingComponent implements OnInit {
   @Input() training: Training;
   @Output() notify = new EventEmitter<SelectedTraining>();
   canDelete = false;
 
   constructor(private trainingSelectDoService: TrainingSelectDoService,
-              private trainingSelectUndoService: TrainingSelectUndoService) {
+              private trainingSelectUndoService: TrainingSelectUndoService,
+              private trainingSelectService: TrainingSelectService) {
     trainingSelectDoService.events$.subscribe(
       selectedDuration => {
         this.notify.emit({'trainingName': this.training.name,
@@ -33,5 +35,13 @@ export class TrainingComponent {
         });
       this.canDelete = false;
     });
+  }
+
+  ngOnInit(): void {
+    console.log(this.trainingSelectService)
+    const trainingSelection = this.trainingSelectService.get(this.training.name);
+    if (trainingSelection) {
+      this.canDelete = true;
+    }
   }
 }

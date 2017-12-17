@@ -2,48 +2,33 @@ import {Component, OnInit} from '@angular/core';
 import {TrainingService} from '../fit.assistant/service/training.service';
 import {Training} from '../fit.assistant/model/training.model';
 import {SelectedTraining} from '../fit.assistant/model/selected.training.model';
+import {TrainingSelectService} from './service/training.select.service';
 
 
 @Component({
   selector: 'app-selection-assistant',
   templateUrl: 'selection.assistant.component.html',
-  styleUrls: ['selection.assistant.component.css']
+  styleUrls: ['selection.assistant.component.css'],
 })
 export class SelectionAssistantComponent implements OnInit {
   trainings: Training[];
   errorMessage: string;
-  selectedTrainings: SelectedTraining[];
 
-  constructor(private trainingService: TrainingService) {}
+  constructor(private trainingService: TrainingService,
+              private trainingSelectService: TrainingSelectService) {}
 
   onNotify(training: SelectedTraining) {
     if (training.selected) {
-      this.addSelectedTraining(training);
+      this.trainingSelectService.set(training);
     } else {
-      this.removeSelectedTraining(training);
+      // TODO: check on conflicts with planned events
+      this.trainingSelectService.delete(training);
     }
     // Update selection on fit assistant or wait to next step
   }
 
-  findSelectedTraining(training: SelectedTraining): number {
-    // Returns index of selected training or -1
-    return this.selectedTrainings.findIndex(selected => selected.trainingName === training.trainingName);
-  }
-
-  removeSelectedTraining(training: SelectedTraining): void {
-    const idx = this.findSelectedTraining(training);
-    if (idx >= 0) {
-      this.selectedTrainings.splice(idx, 1);
-    }
-  }
-
-  addSelectedTraining(training: SelectedTraining): void {
-    this.removeSelectedTraining(training);
-    this.selectedTrainings.push(training);
-  }
 
   ngOnInit(): void {
-    this.selectedTrainings = [];
     this.trainingService.getTrainingsMock()
       .subscribe(trainings => this.trainings = trainings,
         error => this.errorMessage = <any>error);

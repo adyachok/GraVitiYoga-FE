@@ -19,6 +19,7 @@ import {SetEventModalComponent} from './planning.assistant/modal/set.event.compo
 import {TimepickerComponent} from './tools/timepicker.component';
 import {CalculationAssistantComponent} from './calculation.assistant/calculation.assistant.component';
 import {TrainingEventSelectionService} from './planning.assistant/services/training.event.selection.service';
+import {TrainingSelectService} from './selection.assistant/service/training.select.service';
 
 
 @NgModule({
@@ -48,7 +49,7 @@ import {TrainingEventSelectionService} from './planning.assistant/services/train
       // {path: '**', component: PageNotFound}
     ], {useHash: true})
   ],
-  providers: [TrainingService, TrainingEventSelectionService],
+  providers: [TrainingService, TrainingSelectService, TrainingEventSelectionService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
