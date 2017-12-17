@@ -9,13 +9,14 @@ import {TrainingSelectUndoService} from '../service/training.select.undo.service
 })
 export class DeleteModalComponent {
   @Input() name: string;
+  @Input() deleteConflict: boolean;
 
-  constructor(private modalService: NgbModal, private trainingUnselectService: TrainingSelectUndoService) {}
+  constructor(private modalService: NgbModal, private trainingSelectUndoService: TrainingSelectUndoService) {}
 
   open(content) {
     this.modalService.open(content).result.then((result) => {
       if (result === 'Unselection done') {
-        this.trainingUnselectService.announce(true);
+        this.trainingSelectUndoService.announce(true);
       }
     }, (reason) => {
       console.log('Dismissed ${this.getDismissReason(reason)}');

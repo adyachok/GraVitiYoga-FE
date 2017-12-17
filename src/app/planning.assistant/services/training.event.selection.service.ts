@@ -88,7 +88,7 @@ export class TrainingEventSelectionService {
     return null;
   }
 
-  searchOnId(id: number) {
+  searchOnId(id: number): TrainingEventSelection {
     return this.selection.find(selection => selection.id === id);
   }
 
@@ -143,6 +143,23 @@ export class TrainingEventSelectionService {
           drawer.selectCell(_cell);
         }
         evt.selectedCells = cells;
+      }
+    }
+  }
+
+  searchOnName(name: string): TrainingEventSelection {
+    return this.selection.find(event => event.trainingEvent.trainingName === name);
+  }
+
+  private searchAllByName(name: string) {
+    return this.selection.filter(event => event.trainingEvent.trainingName === name);
+  }
+
+  clean(name: string) {
+    const toBeRemoved = this.searchAllByName(name);
+    if (toBeRemoved.length > 0) {
+      for (const event of toBeRemoved) {
+        this.delete(event);
       }
     }
   }

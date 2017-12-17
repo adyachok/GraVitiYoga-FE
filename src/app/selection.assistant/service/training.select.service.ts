@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {SelectedTraining} from '../../fit.assistant/model/selected.training.model';
+import {TrainingEventSelectionService} from '../../planning.assistant/services/training.event.selection.service';
 
 
 @Injectable()
 export class TrainingSelectService {
   private selectedTrainings: SelectedTraining[];
 
-  constructor () {
+  constructor (private trainingEventSelectionService: TrainingEventSelectionService) {
     this.selectedTrainings = [];
   }
 
@@ -23,6 +24,7 @@ export class TrainingSelectService {
     const idx = this.index(training.trainingName);
     if (idx >= 0) {
       this.selectedTrainings.splice(idx, 1);
+      this.trainingEventSelectionService.clean(training.trainingName);
     }
   }
 

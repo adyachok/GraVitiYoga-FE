@@ -8,7 +8,7 @@
   <div class="training-select col-sm-1" >
     <app-info [name]="training.name" [shortDescription]="training.shortDescription"></app-info>
     <app-discount [discountPolicy]="training.discountPolicy" [trainingBasePrice]="training.price" [selected]="canDelete"></app-discount>
-    <app-del [name]="training.name" *ngIf="canDelete"></app-del>
+    <app-del [name]="training.name" [deleteConflict]="deleteConflict" *ngIf="canDelete"></app-del>
   </div>
   <div class="training-price col-sm-1">{{ training.price }}</div>
 </div>

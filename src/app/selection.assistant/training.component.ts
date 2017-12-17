@@ -4,6 +4,7 @@ import {SelectedTraining} from '../fit.assistant/model/selected.training.model';
 import {TrainingSelectDoService} from './service/training.select.do.service';
 import {TrainingSelectUndoService} from './service/training.select.undo.service';
 import {TrainingSelectService} from './service/training.select.service';
+import {TrainingEventSelectionService} from "../planning.assistant/services/training.event.selection.service";
 
 
 @Component({
@@ -16,10 +17,12 @@ export class TrainingComponent implements OnInit {
   @Input() training: Training;
   @Output() notify = new EventEmitter<SelectedTraining>();
   canDelete = false;
+  deleteConflict = false;
 
   constructor(private trainingSelectDoService: TrainingSelectDoService,
               private trainingSelectUndoService: TrainingSelectUndoService,
-              private trainingSelectService: TrainingSelectService) {
+              private trainingSelectService: TrainingSelectService,
+              private trainingEventSelectionService: TrainingEventSelectionService) {
     trainingSelectDoService.events$.subscribe(
       selectedDuration => {
         this.notify.emit({'trainingName': this.training.name,
@@ -41,6 +44,9 @@ export class TrainingComponent implements OnInit {
     const trainingSelection = this.trainingSelectService.get(this.training.name);
     if (trainingSelection) {
       this.canDelete = true;
+    }
+    if (this.trainingEventSelectionService.searchOnName(this.training.name)) {
+      this.deleteConflict = true;
     }
   }
 }

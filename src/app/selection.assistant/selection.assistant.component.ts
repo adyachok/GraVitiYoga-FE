@@ -21,7 +21,6 @@ export class SelectionAssistantComponent implements OnInit {
     if (training.selected) {
       this.trainingSelectService.set(training);
     } else {
-      // TODO: check on conflicts with planned events
       this.trainingSelectService.delete(training);
     }
     // Update selection on fit assistant or wait to next step

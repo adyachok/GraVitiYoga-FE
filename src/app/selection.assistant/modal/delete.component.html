@@ -7,6 +7,7 @@
   </div>
   <div class="modal-body">
     <p>Вы желаєть оменить выбор {{ name }}?</p>
+    <p *ngIf="deleteConflict" class="alert alert-danger" style="font-size: x-small;">Отмена выбора преведет к удалению уже спланированных вами занятий!</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark btn-default" (click)="c('Close click')">Закрыть</button>
