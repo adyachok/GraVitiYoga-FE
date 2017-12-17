@@ -11,13 +11,12 @@ export class TrainingSelectService {
   }
 
   get(trainingName: string): SelectedTraining {
-    return this.selectedTrainings.find(selected => selected.trainingName === trainingName);
+    return this.selectedTrainings.find(training => training.trainingName === trainingName);
   }
 
   set(training: SelectedTraining) {
     this.delete(training);
     this.selectedTrainings.push(training);
-    console.log(this.selectedTrainings);
   }
 
   delete(training: SelectedTraining) {
@@ -29,7 +28,7 @@ export class TrainingSelectService {
 
   index(trainingName: string): number {
     // Returns index of selected training or -1
-    return this.selectedTrainings.findIndex(selected => selected.trainingName === trainingName);
+    return this.selectedTrainings.findIndex(training => training.trainingName === trainingName);
   }
 
   empty(): boolean {
@@ -38,5 +37,9 @@ export class TrainingSelectService {
 
   values() {
     return this.selectedTrainings;
+  }
+
+  names() {
+    return this.selectedTrainings.map(training => training.trainingName);
   }
 }

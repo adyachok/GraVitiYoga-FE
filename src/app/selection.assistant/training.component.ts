@@ -38,7 +38,6 @@ export class TrainingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.trainingSelectService)
     const trainingSelection = this.trainingSelectService.get(this.training.name);
     if (trainingSelection) {
       this.canDelete = true;

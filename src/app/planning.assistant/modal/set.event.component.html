@@ -16,19 +16,13 @@
     <br>
     <label for="training-name">Виберите тренинг:</label>
     <select class="form-control select-training-name" id="training-name" [(ngModel)]="chosenTrainingName">
-      <option>Tренировка GraVitiYoga в группе</option>
-      <option>Урок GraVitiYoga с персональным инструктором</option>
-      <option>Урок классической йоги (дыхание, равновесие, растяжки)</option>
-      <option>Массаж шведи, спортивный или классический</option>
-      <option>Массаж интуитивный</option>
-      <option>Программа индивидуального моделирования тела</option>
-      <option>Занятия на тренажерах “ПравИло” и “Лебедь”</option>
+      <option *ngFor="let trainingName of selectedTrainingNames">{{ trainingName }}</option>
     </select>
   </div>
   <div class="modal-footer">
     <button *ngIf="edit" type="button" class="btn btn-outline-dark btn-danger" (click)="c('Set event delete')">Удалить</button>
     <button type="button" class="btn btn-outline-dark btn-default" (click)="c('Close click')">Закрыть</button>
-    <button *ngIf="!edit" type="button" class="btn btn-outline-dark btn-success" (click)="c('Set event done')">Выбрать</button>
+    <button *ngIf="!edit" [ngClass]="{'disabled': disableSaveButton}" type="button" class="btn btn-outline-dark btn-success" (click)="c('Set event done')">Выбрать</button>
     <button *ngIf="edit" type="button" class="btn btn-outline-dark btn-info" (click)="c('Set event done')">Редактировать</button>
   </div>
 </ng-template>

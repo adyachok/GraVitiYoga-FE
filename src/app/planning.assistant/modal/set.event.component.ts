@@ -6,6 +6,8 @@ import {SetEventService} from '../services/set.event.service';
 import {MarkEventService} from '../services/mark.event.service';
 import {TrainingEventSelection} from '../model/training.event.selection.model';
 import {TrainingEventEditMessageModel} from '../model/training.event.edit.message.model';
+import {TrainingSelectService} from '../../selection.assistant/service/training.select.service';
+import {SelectedTraining} from '../../fit.assistant/model/selected.training.model';
 
 
 @Component({
@@ -17,13 +19,17 @@ export class SetEventModalComponent {
   @ViewChild('content')
   private modalTpl: TemplateRef<any>;
   private event: TrainingEventEditMessageModel;
-  private preselectedTrainingName = 'Tренировка GraVitiYoga в группе';
-  private chosenTrainingName = this.preselectedTrainingName;
+  private preselectedTrainingName: string;
+  private chosenTrainingName: string;
   private edit = false;
   private tempEventStartTimeHolder: NgbTimeStruct;
+  private selectedTrainingNames: string[];
+  private disableSaveButton = false;
 
-  constructor(private modalService: NgbModal, private setEventService: SetEventService,
-              private markEventService: MarkEventService) {
+  constructor(private modalService: NgbModal,
+              private setEventService: SetEventService,
+              private markEventService: MarkEventService,
+              private trainingSelectService: TrainingSelectService) {
     this.setEventService.events$.subscribe((event) => {
       this.event = event;
       if (event.name !== 'undefined') {
@@ -31,11 +37,20 @@ export class SetEventModalComponent {
         this.edit = true;
       }
       this.open(this.modalTpl); });
+    this.selectedTrainingNames = trainingSelectService.names();
+    this.preselectedTrainingName = this.selectedTrainingNames.length ? this.selectedTrainingNames[0] : '';
+    this.chosenTrainingName = this.preselectedTrainingName;
+    if (!this.preselectedTrainingName) {
+      this.disableSaveButton = true;
+    }
   }
 
   open(content) {
     this.modalService.open(content).result.then((result) => {
       if (result === 'Set event done') {
+        if (!this.chosenTrainingName) {
+          return;
+        }
         this.updateSelectedTrainingEventTime();
         this.event.name = this.chosenTrainingName;
         this.markEventService.announce(this.event);
