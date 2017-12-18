@@ -31,10 +31,13 @@ export class CalculationAssistantComponent implements OnInit {
 
   buildSummary() {
     for (const selectedTraining of this.selectedTrainings) {
-      const training = <TrainingSummary>this.trainings.find(
+      const trainingSummary = selectedTraining as TrainingSummary;
+      const training = this.trainings.find(
         _training => _training.name === selectedTraining.trainingName);
-      training.duration = selectedTraining.duration;
-      this.trainingSummary.push(training);
+      trainingSummary.selectedDurationDiscountRate = training.discountPolicy.discounts.find(
+        disc => disc.month === selectedTraining.duration).rate;
+      trainingSummary.price = training.price;
+      this.trainingSummary.push(trainingSummary);
     }
   }
 

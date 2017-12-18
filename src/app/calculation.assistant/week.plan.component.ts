@@ -14,6 +14,15 @@ export class WeekPlanComponent implements OnInit {
 
   constructor(private trainingEventSelectionService: TrainingEventSelectionService) {}
 
+  empty(): boolean {
+    for (const day of this.days) {
+      if (this.trainings[day] && this.trainings[day].length) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   ngOnInit() {
     for (const day of Settings.weekDays) {
       this.trainings[day] = this.trainingEventSelectionService.getByDay(day);

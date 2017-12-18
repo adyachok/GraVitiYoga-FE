@@ -1,5 +1,32 @@
 <h4>Отчет</h4>
-<ul>
-  <li *ngFor="let training of trainingSummary">{{ training.name }}- {{ training.duration }}</li>
-</ul>
+
+<table class="table" *ngIf="trainingSummary.length > 0">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Название тренинга</th>
+    <th>Продолжительность, мес.</th>
+    <th>Стоимость базовая</th>
+    <th>Скидка</th>
+    <th>Стоимость со скидкой</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let summary of trainingSummary; let i = index">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ summary.trainingName }}</td>
+        <td>
+          {{ summary.duration }}
+        </td>
+        <td>
+          {{ summary.price }}
+        </td>
+        <td>{{ summary.price * summary.selectedDurationDiscountRate / 100 }}</td>
+        <td>{{ summary.price - summary.price * summary.selectedDurationDiscountRate / 100 }}</td>
+      </tr>
+  </ng-container>
+  </tbody>
+</table>
+
 <app-week-plan></app-week-plan>

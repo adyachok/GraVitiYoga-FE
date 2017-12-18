@@ -19,6 +19,7 @@ export class DiscountModalComponent implements OnInit {
   private _customerPrice: number;
   selectedDiscount = 0;
   private _selectedDiscount: number;
+  private selectedDuration: number;
 
   constructor(private modalService: NgbModal, private trainingSelectService: TrainingSelectDoService) {}
 
@@ -40,7 +41,7 @@ export class DiscountModalComponent implements OnInit {
       this.selected = true;
     }
     // Send selected discounted price
-    this.trainingSelectService.announce(this.customerPrice);
+    this.trainingSelectService.announce(this.selectedDuration);
   }
 
   private processSelected() {
@@ -61,6 +62,9 @@ export class DiscountModalComponent implements OnInit {
     this.customerPrice = this.trainingBasePrice;
     this._customerPrice = this.customerPrice;
     this._selectedDiscount = this.selectedDiscount;
+    if (this.discountPolicy.discounts.length) {
+      this.selectedDuration = this.discountPolicy.discounts[0].month;
+    }
   }
 
   private getDismissReason(reason: any): string {
@@ -76,6 +80,7 @@ export class DiscountModalComponent implements OnInit {
   public countDiscount(evt): void {
     const dicountSelected = evt.target.value;
     const discount = Number(dicountSelected);
+    this.selectedDuration = this.getSelectedDuration(discount);
     if (discount > 0) {
       this.discount = Math.round(this.trainingBasePrice * discount / 100);
       this.customerPrice = this.trainingBasePrice - this.discount;
@@ -84,6 +89,10 @@ export class DiscountModalComponent implements OnInit {
       this.customerPrice = this.trainingBasePrice;
     }
     this.selectedDiscount = dicountSelected;
+  }
+
+  public getSelectedDuration(discount: number): number {
+    return this.discountPolicy.discounts.find(disc => disc.rate === discount).month;
   }
 
   public ngOnInit(): void {

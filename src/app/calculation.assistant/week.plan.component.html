@@ -1,7 +1,6 @@
-<table class="table">
+<table class="table" *ngIf="!empty()">
   <thead>
   <tr>
-    <th>#</th>
     <th>День недели</th>
     <th>Название занятия</th>
     <th>Время занятия</th>
@@ -10,10 +9,9 @@
   </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let day of days">
-      <ng-container *ngFor="let training of trainings[day]">
+    <ng-container *ngFor="let day of days; let i = index">
+      <ng-container *ngFor="let training of trainings[day]; let j = index">
         <tr *ngIf="trainings[day].length > 0">
-            <td>v</td>
             <td>{{ day }}</td>
             <td>
               {{ training.trainingEvent.trainingName }}
@@ -29,6 +27,4 @@
   </tbody>
 </table>
 
-<div>
-
-</div>
+<p *ngIf="empty()">Вы не запланировали ни одного занятия.</p>

@@ -1,7 +1,16 @@
-import {Training} from '../../fit.assistant/model/training.model';
+import {SelectedTraining} from '../../fit.assistant/model/selected.training.model';
 
 
-export class TrainingSummary extends Training {
+export class TrainingSummary extends SelectedTraining {
   // Duration in month
-  duration: number;
+  selectedDurationDiscountRate: number;
+  price: number;
+
+  getDiscountCount(): number {
+    return Math.round(this.price * this.selectedDurationDiscountRate / 100);
+  }
+
+  getDiscountPriceCount() {
+    return this.price - this.getDiscountCount();
+  }
 }
