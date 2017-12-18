@@ -20,6 +20,7 @@ import {TimepickerComponent} from './tools/timepicker.component';
 import {CalculationAssistantComponent} from './calculation.assistant/calculation.assistant.component';
 import {TrainingEventSelectionService} from './planning.assistant/services/training.event.selection.service';
 import {TrainingSelectService} from './selection.assistant/service/training.select.service';
+import {WeekPlanComponent} from './calculation.assistant/week.plan.component';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import {TrainingSelectService} from './selection.assistant/service/training.sele
     PlanningAssistantComponent,
     SetEventModalComponent,
     TimepickerComponent,
-    CalculationAssistantComponent
+    CalculationAssistantComponent, WeekPlanComponent
   ],
   imports: [
     BrowserModule,

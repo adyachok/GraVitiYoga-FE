@@ -163,4 +163,9 @@ export class TrainingEventSelectionService {
       }
     }
   }
+
+  getByDay(day: string): TrainingEventSelection[] {
+    return this.selection.filter( event => event.trainingEvent.timeSlot.day === day)
+      .sort((o1, o2) => o1.compare(o2));
+  }
 }

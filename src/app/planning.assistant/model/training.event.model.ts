@@ -16,4 +16,8 @@ export class TrainingEvent {
   eq(other: TrainingEvent): boolean {
     return this.timeSlot.eq(other.timeSlot);
   }
+
+  gt(other: TrainingEvent): boolean {
+    return this.timeSlot.gt(other.timeSlot);
+  }
 }

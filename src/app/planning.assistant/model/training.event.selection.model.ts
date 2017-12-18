@@ -29,4 +29,14 @@ export class TrainingEventSelection {
   intersect(other: TrainingEventSelection) {
     return this.trainingEvent.intersect(other.trainingEvent);
   }
+
+  compare(other) {
+    if (this.trainingEvent.eq(other.trainingEvent)) {
+      return 0;
+    } else if (this.trainingEvent.gt(other.trainingEvent)) {
+      return 1;
+    } else {
+      return -1;
+    }
+  }
 }

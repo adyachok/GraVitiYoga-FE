@@ -1,0 +1,34 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>День недели</th>
+    <th>Название занятия</th>
+    <th>Время занятия</th>
+    <th>Стоимость со скидкой</th>
+    <th>Скидка</th>
+  </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let day of days">
+      <ng-container *ngFor="let training of trainings[day]">
+        <tr *ngIf="trainings[day].length > 0">
+            <td>v</td>
+            <td>{{ day }}</td>
+            <td>
+              {{ training.trainingEvent.trainingName }}
+            </td>
+            <td>
+              {{ training.trainingEvent.timeSlot.start.toString() }}-{{ training.trainingEvent.timeSlot.finish.toString() }}
+            </td>
+            <td>v</td>
+            <td>v</td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </tbody>
+</table>
+
+<div>
+
+</div>

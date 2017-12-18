@@ -15,6 +15,10 @@ export class TimeSlotModel {
     return this.day === other.day && this.start.eq(other.start) && this.finish.eq(other.finish);
   }
 
+  gt(other: TimeSlotModel): boolean {
+    return this.day === other.day && this.start.gt(other.start) && this.finish.gt(other.finish);
+  }
+
   intersect(other: TimeSlotModel): boolean {
     if (this.day === other.day) {
       return this.start.lt(other.start) && this.finish.gt(other.start) ||
