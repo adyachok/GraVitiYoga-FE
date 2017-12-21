@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {TrainingEventSelectionService} from '../planning.assistant/services/training.event.selection.service';
 import {Settings} from '../settings/settings';
 import {CalculationService} from './service/calculation.service';
 
@@ -22,6 +21,10 @@ export class WeekPlanComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  getWeeklyTotalPrice(): number {
+    return this.calculationService.getWeeklyTotalPrice();
   }
 
   ngOnInit() {

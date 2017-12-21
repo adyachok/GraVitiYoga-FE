@@ -24,6 +24,6 @@
       </ng-container>
     </tbody>
   </table>
-
+  <p *ngIf="!empty()">Недельнaя стоимость занятий <span class="total">{{ this.getWeeklyTotalPrice() }}</span></p>
   <p *ngIf="empty()">Вы не запланировали ни одного занятия.</p>
 </div>

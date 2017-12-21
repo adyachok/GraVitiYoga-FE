@@ -65,4 +65,12 @@ export class CalculationService {
   getTrainingEventSummary() {
     return this.trainingEventsSummaries;
   }
+
+  getWeeklyTotalPrice(): number {
+    let price = 0;
+    for (const evt of this.trainingEventsSummaries) {
+      price += evt.getPrice();
+    }
+    return price;
+  }
 }

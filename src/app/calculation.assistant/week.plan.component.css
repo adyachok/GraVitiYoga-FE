@@ -1,3 +1,8 @@
 h5, .summary{
   margin: 1em;
 }
+
+.total {
+  font-weight: bold;
+}
+
