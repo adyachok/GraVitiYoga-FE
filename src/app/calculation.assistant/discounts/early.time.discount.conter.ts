@@ -22,7 +22,7 @@ export class EarlyTimeDiscountCounter extends DiscountCounter {
   count(): number {
     const timeSlot = this.trainingEventSummary.timeSlot;
     if (timeSlot.finish.eq(this.toTime) || timeSlot.finish.lt(this.toTime)) {
-      return this.trainingEventSummary.price * this.rate / 100;
+      return Math.round(this.trainingEventSummary.price * this.rate / 100);
     }
     return 0;
   }
