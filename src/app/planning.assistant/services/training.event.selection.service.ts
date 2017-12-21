@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import {TrainingEventRendererHelper} from '../helper/renderer.helper';
 import {TrainingEventSelection} from '../model/training.event.selection.model';
 import {Injectable} from '@angular/core';
@@ -24,6 +25,7 @@ export class TrainingEventSelectionService {
         for (const cell of event.selectedCells) {
           drawer.unselectCell(cell);
         }
+        drawer.removeTrainingHTMLElement(event.selectedCells[0]);
       }
       return UpdateAction.DELETED;
     }
@@ -61,7 +63,7 @@ export class TrainingEventSelectionService {
     if (message.name === 'cancel') {
       return this.delete(event, drawer);
     } else {
-      drawer.removeTrainingHTMLElement(event.selectedCells[0]);
+      // drawer.removeTrainingHTMLElement(event.selectedCells[0]);
       event.trainingEvent.trainingName = message.name;
       event.trainingEvent.timeSlot.start = message.start;
       event.trainingEvent.timeSlot.finish.hour = message.start.hour + 1;
@@ -111,7 +113,7 @@ export class TrainingEventSelectionService {
   private searchTemporarySavedTrainingEvent(id: number): TrainingEventSelection {
     let evt = this.tempSelection[id];
     if (!evt) {
-      evt = this.searchOnId(id);
+      evt = _.cloneDeep(this.searchOnId(id));
     } else {
       delete this.tempSelection[id];
     }
