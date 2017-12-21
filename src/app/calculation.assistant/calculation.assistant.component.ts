@@ -10,7 +10,7 @@ import {CalculationService} from './service/calculation.service';
   providers: [CalculationService]
 })
 export class CalculationAssistantComponent implements OnInit {
-  private trainingSummary: TrainingSummary[];
+  trainingSummary: TrainingSummary[];
 
   constructor(private calculationService: CalculationService) {
   }
