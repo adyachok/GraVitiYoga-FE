@@ -1,30 +1,29 @@
-<table class="table" *ngIf="!empty()">
-  <thead>
-  <tr>
-    <th>День недели</th>
-    <th>Название занятия</th>
-    <th>Время занятия</th>
-    <th>Стоимость со скидкой</th>
-    <th>Скидка</th>
-  </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngFor="let day of days; let i = index">
-      <ng-container *ngFor="let training of trainings[day]; let j = index">
-        <tr *ngIf="trainings[day].length > 0">
-            <td>{{ day }}</td>
-            <td>
-              {{ training.trainingEvent.trainingName }}
-            </td>
-            <td>
-              {{ training.trainingEvent.timeSlot.start.toString() }}-{{ training.trainingEvent.timeSlot.finish.toString() }}
-            </td>
-            <td>v</td>
-            <td>v</td>
-        </tr>
+<div class="row summary">
+  <table class="table" *ngIf="!empty()">
+    <thead>
+    <tr>
+      <th>День недели</th>
+      <th>Название занятия</th>
+      <th class="align-middle text-center">Время занятия</th>
+      <th class="align-middle text-center">Стоимость со скидкой</th>
+      <th>Скидка</th>
+    </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let day of days; let i = index">
+        <ng-container *ngFor="let training of trainings[day]; let j = index">
+          <tr *ngIf="trainings[day].length > 0">
+              <td>{{ day }}</td>
+              <td>{{ training.trainingName }}</td>
+              <td class="align-middle text-center">{{ training.timeSlot.start.toString() }} - {{ training.timeSlot.finish.toString() }}</td>
+              <td class="align-middle text-center">{{ training.getPrice() }}</td>
+              <td *ngIf="training.isPriceDiscounted()"><span class="badge badge-info" *ngFor="let discount of training.discounts">{{ discount.toString() }}</span></td>
+              <td *ngIf="!training.isPriceDiscounted()"></td>
+          </tr>
+        </ng-container>
       </ng-container>
-    </ng-container>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<p *ngIf="empty()">Вы не запланировали ни одного занятия.</p>
+  <p *ngIf="empty()">Вы не запланировали ни одного занятия.</p>
+</div>

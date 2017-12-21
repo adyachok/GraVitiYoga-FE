@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TrainingEventSelectionService} from '../planning.assistant/services/training.event.selection.service';
 import {Settings} from '../settings/settings';
+import {CalculationService} from './service/calculation.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ export class WeekPlanComponent implements OnInit {
   private days = Settings.weekDays;
   private trainings = {};
 
-  constructor(private trainingEventSelectionService: TrainingEventSelectionService) {}
+  constructor(private calculationService: CalculationService) {}
 
   empty(): boolean {
     for (const day of this.days) {
@@ -25,7 +26,7 @@ export class WeekPlanComponent implements OnInit {
 
   ngOnInit() {
     for (const day of Settings.weekDays) {
-      this.trainings[day] = this.trainingEventSelectionService.getByDay(day);
+      this.trainings[day] = this.calculationService.getByDay(day);
     }
   }
 }

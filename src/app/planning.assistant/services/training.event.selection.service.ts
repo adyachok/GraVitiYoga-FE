@@ -168,4 +168,8 @@ export class TrainingEventSelectionService {
     return this.selection.filter( event => event.trainingEvent.timeSlot.day === day)
       .sort((o1, o2) => o1.compare(o2));
   }
+
+  values() {
+    return this.selection;
+  }
 }

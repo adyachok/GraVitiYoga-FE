@@ -1,32 +1,39 @@
-<h4>Отчет</h4>
+<div class="row">
+  <h4>Отчет</h4>
+</div>
 
-<table class="table" *ngIf="trainingSummary.length > 0">
-  <thead>
-  <tr>
-    <th>#</th>
-    <th>Название тренинга</th>
-    <th>Продолжительность, мес.</th>
-    <th>Стоимость базовая</th>
-    <th>Скидка</th>
-    <th>Стоимость со скидкой</th>
-  </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let summary of trainingSummary; let i = index">
-      <tr>
-        <td>{{ i + 1 }}</td>
-        <td>{{ summary.trainingName }}</td>
-        <td>
-          {{ summary.duration }}
-        </td>
-        <td>
-          {{ summary.price }}
-        </td>
-        <td>{{ summary.price * summary.selectedDurationDiscountRate / 100 }}</td>
-        <td>{{ summary.price - summary.price * summary.selectedDurationDiscountRate / 100 }}</td>
-      </tr>
-  </ng-container>
-  </tbody>
-</table>
+<div class="row">
+  <h5>Выбранные направления</h5>
+</div>
 
+<div class="row summary">
+  <table class="table" *ngIf="trainingSummary.length > 0">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Название тренинга</th>
+      <th class="align-middle text-center">Продолжительность, мес.</th>
+      <th class="align-middle text-center">Стоимость базовая</th>
+      <th class="align-middle text-center">Скидка</th>
+      <th class="align-middle text-center">Стоимость со скидкой</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let summary of trainingSummary; let i = index">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ summary.trainingName }}</td>
+          <td class="align-middle text-center">{{ summary.duration }}</td>
+          <td class="align-middle text-center">{{ summary.price }}</td>
+          <td class="align-middle text-center">{{ summary.getDiscountCount() }}</td>
+          <td class="align-middle text-center">{{ summary.getDiscountPriceCount() }}</td>
+        </tr>
+    </ng-container>
+    </tbody>
+  </table>
+  <p *ngIf="trainingSummary.length === 0">Вы не выбрали ни одного направления</p>
+</div>
+<div class="row">
+  <h5>Распорядок занятий</h5>
+</div>
 <app-week-plan></app-week-plan>
