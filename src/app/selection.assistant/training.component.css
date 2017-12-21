@@ -11,6 +11,12 @@
   border-radius: 50%;
   height: 25px;
 }
+.training-info {
+  background-color: #c2ea00;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+}
 
 .training-select {
   background-color: #AEEA00;

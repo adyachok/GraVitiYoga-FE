@@ -5,10 +5,12 @@
       <div class="col-sm-11">{{ training.name }}</div>
     </div>
   </div>
-  <div class="training-select col-sm-1" >
+  <div class="training-info col-sm-1" >
     <app-info [name]="training.name" [shortDescription]="training.shortDescription"></app-info>
+  </div>
+  <div class="training-select col-sm-1">
     <app-discount [discountPolicy]="training.discountPolicy" [trainingBasePrice]="training.price" [selected]="canDelete"></app-discount>
     <app-del [name]="training.name" [deleteConflict]="deleteConflict" *ngIf="canDelete"></app-del>
   </div>
-  <div class="training-price col-sm-1">{{ training.price }}</div>
+  <div class="training-price col-sm-2">{{ training.price }}</div>
 </div>
