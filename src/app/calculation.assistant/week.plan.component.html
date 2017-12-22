@@ -24,6 +24,17 @@
       </ng-container>
     </tbody>
   </table>
-  <p *ngIf="!empty()">Недельнaя стоимость занятий <span class="total">{{ this.getWeeklyTotalPrice() }}</span></p>
+
   <p *ngIf="empty()">Вы не запланировали ни одного занятия.</p>
+</div>
+<div class="row total" *ngIf="!empty()">
+  <p class="col-sm-9 text-center">Общая стоимость занятий</p>
+  <p class="col-sm-2">{{ this.getWeeklyTotalPrice() }} шекелей</p>
+</div>
+<br />
+<div class="row" *ngIf="!empty()">
+  <div class="col-sm-12 text-center">
+    <button type="button" class="btn btn-success">Заказать</button>
+  </div>
+
 </div>

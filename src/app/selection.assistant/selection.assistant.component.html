@@ -3,7 +3,7 @@
     <div class="col-sm-8 text-center">Направление</div>
     <div class="col-sm-1 text-center">Детали</div>
     <div class="col-sm-1 text-center">Выбор</div>
-    <div class="col-sm-2 text-center">Цена</div>
+    <div class="col-sm-2 text-center">Стоимость одного занятия, шекели</div>
   </div>
   <app-training-entry *ngFor="let training of trainings"
                             [training]="training" (notify)="onNotify($event)">

@@ -3,6 +3,10 @@ h5, .summary{
 }
 
 .total {
+  background-color: #F0F4C3;
+  color: #9E9D24;
   font-weight: bold;
+  padding-top: 1rem;
+  margin-bottom: 2px;
+  border-radius: 5px;
 }
-
